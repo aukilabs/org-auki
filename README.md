@@ -1,25 +1,25 @@
 # Auki Org Context
 
-This is the shared organizational context for Auki Labs. Every employee's exocortex symlinks to this repo as `org/`, giving their AI partner the same foundational context about the company — mission, strategy, values, methods, vocabulary, and the canonical list of projects.
+This is the public organizational context for Auki Labs. Every external contributor's exocortex symlinks to this repo as `org-auki/`, giving their AI partner the same foundational context about the company — mission, strategy, values, methods, vocabulary, and the canonical list of projects.
 
 One copy on disk. Everyone reads it. When leadership updates a file here, every exocortex sees the change.
 
 ## What's here
 
 - `src/` — the org context files that get symlinked into personal exocortices. See [`src/readme.md`](src/readme.md) for the full list, including [`src/projects.md`](src/projects.md) — the canonical pointer to every Auki project repo.
-- `roadmap.md` — the org-level strategic plan (all project roadmaps must align to this)
+- `src/roadmap.md` — the org-level strategic plan (all project roadmaps must align to this)
 - `sprint.md` — what we're working on this week
 - `changelog.md` — org-level changelog
 
 ## How to use
 
-Symlink `src/` into your personal exocortex as `org/`:
+Symlink `src/` into your personal exocortex as `org-auki/`:
 
 ```bash
-ln -s ~/aukilabs-org/src ~/my-exocortex/org
+ln -s ~/org-auki/src ~/my-exocortex/org-auki
 ```
 
-Your AI partner will read `org/organization.md`, `org/methods.md`, `org/projects.md`, etc. alongside your personal files.
+Your AI partner will read `org-auki/organization.md`, `org-auki/methods.md`, `org-auki/projects.md`, etc. alongside your personal files.
 
 ## Project structure
 

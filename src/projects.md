@@ -6,7 +6,7 @@ Canonical list of public Auki project repos. Source of truth for what projects e
 
 | Repo | Clone from | What it is |
 |------|-----------|------------|
-| [org](https://github.com/aukilabs/org-auki) | `git clone https://github.com/aukilabs/org-auki.git` | Shared org brain — mission, methods, team, conventions |
+| [org-auki](https://github.com/aukilabs/org-auki) | `git clone https://github.com/aukilabs/org-auki.git` | Shared org brain — mission, methods, team, conventions |
 | [exocortex](https://github.com/aukilabs/exocortex) | `git clone https://github.com/aukilabs/exocortex.git` | Exocortex template for onboarding new contributors |
 | [auki](https://github.com/aukilabs/auki) | `git clone https://github.com/aukilabs/auki.git` | The $AUKI SDK repo |
 | [relay](https://github.com/aukilabs/hagall) | `git clone https://github.com/aukilabs/hagall.git` | Relay — real-time networking server for sessions and participants (previously Hagall) |
