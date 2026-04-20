@@ -1,4 +1,4 @@
-Canonical list of public Auki project repos. Source of truth for what projects exist at Auki — adding a new project means adding a row here first.
+Canonical list of public Auki project repos and cross-repo quests. Source of truth for what projects exist at Auki — adding a new project or quest means adding a row here first.
 
 # Repos
 
@@ -9,8 +9,13 @@ Canonical list of public Auki project repos. Source of truth for what projects e
 | [org-auki](https://github.com/aukilabs/org-auki) | `git clone https://github.com/aukilabs/org-auki.git` | Shared org brain — mission, methods, team, conventions |
 | [exocortex](https://github.com/aukilabs/exocortex) | `git clone https://github.com/aukilabs/exocortex.git` | Exocortex template for onboarding new contributors |
 | [auki](https://github.com/aukilabs/auki) | `git clone https://github.com/aukilabs/auki.git` | The $AUKI SDK repo |
-| [relay](https://github.com/aukilabs/hagall) | `git clone https://github.com/aukilabs/hagall.git` | Relay — real-time networking server for sessions and participants (previously Hagall) |
-| [domain-server](https://github.com/aukilabs/domain-server) | `git clone https://github.com/aukilabs/domain-server.git` | Domain Server — portal poses and spatial domain data (reconstructions, occupancy maps) |
-| [reconstruction-server](https://github.com/aukilabs/reconstruction-server) | `git clone https://github.com/aukilabs/reconstruction-server.git` | Reconstruction node — 3D reconstruction of physical spaces for domains |
-| [splatter-server](https://github.com/aukilabs/splatter-server) | `git clone https://github.com/aukilabs/splatter-server.git` | Splatter node — gaussian-splat rendering for photorealistic scenes |
+| [relay](https://github.com/aukilabs/relay) | `git clone https://github.com/aukilabs/relay.git` | First-party Relay bundle app — joins the network and offers all four SDK networking capabilities from a single deployable |
 
+
+
+## Quests (inside the org repo)
+
+Quests are cross-repo projects — work that spans multiple repos where no single repo can own the state. They live inside this `org-auki` repo at `src/quests/{slug}/`, so cloning `org-auki` includes every quest. Symlink a quest into your exocortex root for top-level access, the same way you would a project repo.
+
+| Quest | Path | What it is |
+|-------|------|------------|

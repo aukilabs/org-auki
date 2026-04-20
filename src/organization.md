@@ -26,6 +26,12 @@ The protocol exists to let any node answer four questions about any other node:
 - **How can I talk to you?**
 - **How can I compensate you?**
 
+## A note on decentralization
+
+Just like each website on the internet is centrally hosted by someone somewhere, every domain on the real world web is centrally controlled and hosted by its operator. The real world web is polycentrically decentralized - a network of self-sovereign entities forming a larger collaborative whole.
+
+In the real world web, the word "decentralization" means that there is no central entity building and maintaining a map of the whole world, rather, there is a protocol for moving between self-hosted domains.
+
 ## Why the Network Needs an Economy
 
 The real world web can't be run by a single company. No one organization can map every room, run every relay, or process every sensor stream on the planet. The network has to be built and operated by many independent participants — people, businesses, and machines — each contributing compute, storage, sensors, or spatial data.
