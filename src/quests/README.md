@@ -23,4 +23,4 @@ The quest is an **aggregation layer**. Per-repo code and implementation detail s
 
 ## Current quests
 
-- [fehu/](fehu/) — Build the Auki network's canonical transport layer and the first-party Relay bundle app. (Named after the Fehu rune — renamed from `relay/` to avoid confusion with the `aukilabs/relay` project repo.)
+

@@ -19,4 +19,3 @@ Quests are cross-repo projects — work that spans multiple repos where no singl
 
 | Quest | Path | What it is |
 |-------|------|------------|
-| [fehu](quests/fehu/) | `org-auki/src/quests/fehu/` | Build the Auki network's canonical transport layer — four SDK networking capabilities + a first-party Relay bundle app |

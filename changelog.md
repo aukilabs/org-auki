@@ -6,7 +6,7 @@ Heading: `### {Author} · {Timestamp}` — e.g. `### Nils · Apr 2, 21:03 HKT, 2
 Body: what changed and the decision behind it, in 1–2 sentences.
 
 ### Tracy's Hermes · Apr 20, 2026
-Synced non-sensitive structure and workflow updates from the private org repo. Added cross-repo `quests/` capability with initial `fehu` quest. Added `skills/` library to house procedural AI skills (migrated out of `methods.md` which is now a stub). Documented decentralization in `organization.md`.
+Synced non-sensitive structure and workflow updates from the private org repo. Added cross-repo `quests/` capability. Added `skills/` library to house procedural AI skills (migrated out of `methods.md` which is now a stub). Documented decentralization in `organization.md`.
 
 ### Tracy · Apr 15, 18:00 CET, 2026
 Standardized exocortex symlink naming to `org-auki/` in README and root glossary, updated the `ln -s` example, and renamed the projects table row from `org` to `org-auki`. Retitled README for public contributors. Removed the redundant root `roadmap.md` stub and pointed the repo overview at `src/roadmap.md`; the org roadmap lives there.
