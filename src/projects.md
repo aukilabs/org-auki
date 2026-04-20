@@ -10,9 +10,6 @@ Canonical list of public Auki project repos and cross-repo quests. Source of tru
 | [exocortex](https://github.com/aukilabs/exocortex) | `git clone https://github.com/aukilabs/exocortex.git` | Exocortex template for onboarding new contributors |
 | [auki](https://github.com/aukilabs/auki) | `git clone https://github.com/aukilabs/auki.git` | The $AUKI SDK repo |
 | [relay](https://github.com/aukilabs/relay) | `git clone https://github.com/aukilabs/relay.git` | First-party Relay bundle app — joins the network and offers all four SDK networking capabilities from a single deployable |
-| [cactus (frontend)](https://github.com/matterless/cactus) | `git clone https://github.com/matterless/cactus.git` | Cactus retail AI copilot — frontend |
-| [cactus-backend](https://github.com/matterless/cactus-backend) | `git clone https://github.com/matterless/cactus-backend.git` | Cactus retail AI copilot — backend |
-| [gotu-web](https://github.com/matterless/gotu-web) | `git clone https://github.com/matterless/gotu-web.git` | Web editor for the GoTu navigator app |
 
 
 
