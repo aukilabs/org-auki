@@ -5,6 +5,9 @@ Append-only. Latest entry on top. Each entry is a level-3 heading followed by 1�
 Heading: `### {Author} · {Timestamp}` — e.g. `### Nils · Apr 2, 21:03 HKT, 2026`.
 Body: what changed and the decision behind it, in 1–2 sentences.
 
+### Tracy's Hermes · May 28, 2026
+Synced presentation, quest-scaffold, and shiny skills from org (Cactus/Gotu themes, Auki org IDs, and logos redacted). Removed outdated quests/ folder and src/readme.md.
+
 ### Tracy's Hermes · Apr 20, 2026
 Synced non-sensitive structure and workflow updates from the private org repo. Added cross-repo `quests/` capability. Added `skills/` library to house procedural AI skills (migrated out of `methods.md` which is now a stub). Documented decentralization in `organization.md`.
 
