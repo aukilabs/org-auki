@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phil — Operations · Week 20</title>
+<script>(function(){var t=localStorage.getItem('auki-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg" alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg" alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Operations</h1>
+      <p class="doc-subtitle">Quiet week. Vendor review wrapped up and the Q3 offsite is locked. Background work that needed to get done.</p>
+    </div>
+    <div class="opening-right">
+      <span class="meta-author">Phil</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; <span class="meta-week">Week 20</span></span>
+      <div class="meta-projects">
+        <span class="project-tag">Operations</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>Light week operationally. The main output was closing out the vendor contract review — three agreements signed, one deferred pending legal notes. Q3 offsite logistics are confirmed: venue, travel, and agenda structure all done. AWS cost review is underway and surfacing some surprises in the compute spend we'll need to address.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li><strong>Vendor contracts reviewed and signed</strong> — three of four agreements are signed and filed. The fourth (data processing addendum with our analytics vendor) is with legal for a specific clause review; expected back by end of week.</li>
+        <li><strong>Q3 offsite confirmed</strong> — venue booked, travel coordinated for all attendees, and a draft agenda circulated. Full agenda to be finalised by the end of next week after async input from team leads.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+      <p>Working through our AWS cost structure ahead of the Q3 planning cycle. Initial pass shows compute costs have grown faster than headcount — likely a combination of non-production environments left running and some over-provisioned instances from the Cactus pilot scaling work. Putting together a clean breakdown for Nils before the planning call.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li><strong>Legal turnaround on the DPA</strong> — the analytics vendor contract is waiting on legal to sign off on one clause. No action needed from the team, but flagging in case it affects any planned rollout timelines.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Deliver AWS cost breakdown and recommendations to Nils ahead of Q3 planning</li>
+        <li>Finalise offsite agenda with input from team leads</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html=document.documentElement,btn=document.getElementById('theme-toggle'),sun=btn.querySelector('.icon-sun'),moon=btn.querySelector('.icon-moon'),dark=document.querySelectorAll('.logo-dark'),light=document.querySelectorAll('.logo-light');
+    function applyTheme(t){html.setAttribute('data-theme',t);localStorage.setItem('auki-theme',t);var l=t==='light';sun.style.display=l?'block':'none';moon.style.display=l?'none':'block';dark.forEach(function(e){e.style.display=l?'none':'block';});light.forEach(function(e){e.style.display=l?'block':'none';});}
+    applyTheme(html.getAttribute('data-theme')||'dark');
+    btn.addEventListener('click',function(){applyTheme(html.getAttribute('data-theme')==='light'?'dark':'light');});
+  })();
+</script>
+</body>
+</html>

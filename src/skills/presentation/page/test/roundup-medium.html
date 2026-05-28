@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jay Sheridan — Developer Relations · Week 20</title>
+<script>
+  /* Set theme before paint to avoid flash */
+  (function() {
+    var t = localStorage.getItem('auki-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg"  alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg"  alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Developer Relations<br><span class="accent">Week 20.</span></h1>
+      <p class="doc-subtitle">Quickstart guide shipped and immediately moved the needle on SDK installs. First community office hours ran well.</p>
+    </div>
+
+    <div class="opening-right">
+      <span class="meta-author">Jay Sheridan</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; Week 20</span>
+      <div class="meta-projects">
+        <span class="project-tag">Developer Relations</span>
+        <span class="project-tag">Posemesh SDK</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>Solid week — the new quickstart guide shipped and drove a visible uptick in SDK installs. The first community office hours surfaced two promising builder projects that need direct support.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">127<span class="unit">+</span></div>
+          <div class="metric-delta up">↑ this week</div>
+          <div class="metric-label">New Discord members</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">340</div>
+          <div class="metric-delta up">↑ 22% week-over-week</div>
+          <div class="metric-label">SDK installs</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Quickstart guide rewrite</strong> — new 5-minute path from zero to first spatial anchor. Cut setup steps from 14 to 6.</li>
+        <li><strong>Community office hours</strong> — first live Q&amp;A, six developers attended. Two building serious projects: indoor navigation for logistics, AR retail overlay.</li>
+        <li><strong>SDK Discord channel</strong> — dedicated #sdk-support channel with triage bot, reduces noise in general chat.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+      <h3>Example project library</h3>
+      <p>Three reference implementations for the most common use cases: Domain joining, pose tracking, and multi-device. Approximately 40% done. Targeting the most-requested patterns first based on Discord support volume.</p>
+
+      <h3>Developer forum setup</h3>
+      <p>Evaluating Discourse vs GitHub Discussions. Leaning Discourse for SEO — content needs to be indexable and discoverable for developers searching for SDK help outside of our community. Decision by end of week.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Need Robin to review the pose tracking reference implementation for technical accuracy before publishing. Currently in his queue.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Ship first two reference implementations from the example project library.</li>
+        <li>Publish office hours recap and announce the next session date.</li>
+        <li>Get forum decision closed and begin setup.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026 &nbsp;·&nbsp; Week 20</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html  = document.documentElement;
+    var btn   = document.getElementById('theme-toggle');
+    var sun   = btn.querySelector('.icon-sun');
+    var moon  = btn.querySelector('.icon-moon');
+    var dark  = document.querySelectorAll('.logo-dark');
+    var light = document.querySelectorAll('.logo-light');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('auki-theme', theme);
+      var isLight = theme === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none'  : 'block';
+      dark.forEach(function(el)  { el.style.display = isLight ? 'none'  : 'block'; });
+      light.forEach(function(el) { el.style.display = isLight ? 'block' : 'none';  });
+    }
+
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+</body>
+</html>

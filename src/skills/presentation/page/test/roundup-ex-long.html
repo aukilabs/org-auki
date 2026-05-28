@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arshak — Protocol Networking, Token Economy &amp; Relay Infrastructure · Week 20</title>
+<script>(function(){var t=localStorage.getItem('auki-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg" alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg" alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Protocol Networking, Token Economy &amp; Relay Infrastructure</h1>
+      <p class="doc-subtitle">The most significant week in the networking layer since the protocol rewrite. Relay throughput tripled, staking reached testnet, and the privacy layer is finally moving — though the ZK verification problem is harder than expected.</p>
+    </div>
+    <div class="opening-right">
+      <span class="meta-author">Arshak</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; <span class="meta-week">Week 20</span></span>
+      <div class="meta-projects">
+        <span class="project-tag">Posemesh Protocol</span>
+        <span class="project-tag">Token Economy</span>
+        <span class="project-tag">Relay</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>Three things happened this week that matter. First, the connection pooling rewrite landed and more than tripled P2P relay throughput — bigger than expected, and it changes our cost-per-relay assumptions in the token model. Second, the AUKI token staking mechanism is live on testnet; validators can stake and unstake, slash conditions are implemented but dormant. Third, the ZK privacy layer work has hit a real problem: on-device proof verification is taking 800ms on mid-range Android, which is too slow for the join flow. We need a plan for this in the next two weeks or the privacy layer timeline slips significantly. Everything else is progressing but these three are what matter.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">3<span class="unit">×</span></div>
+          <div class="metric-delta up">↑ relay throughput</div>
+          <div class="metric-label">P2P relay throughput</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">12<span class="unit">ms</span></div>
+          <div class="metric-delta up">↓ from 31ms</div>
+          <div class="metric-label">Median message latency</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">99.4<span class="unit">%</span></div>
+          <div class="metric-delta up">↑ from 97.1%</div>
+          <div class="metric-label">Testnet uptime (7d)</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Connection pooling rewrite</strong> — replaced the naive per-connection socket model with a pooled architecture. Relay throughput tripled in the benchmark suite. Latency dropped from 31ms to 12ms median. The improvement was larger than the model predicted; we should revisit the cost-per-relay assumptions in the token economy before the next validator incentive simulation.</li>
+        <li><strong>Token staking on testnet</strong> — the core staking contract is deployed and verified. Validators can stake and unstake AUKI tokens. Slash conditions are implemented and tested but not yet activated — that comes after the incentive design work stabilises.</li>
+        <li><strong>Relay node health monitoring</strong> — structured health metrics across all relay nodes. The dashboard now shows per-node throughput, queue depth, connection count, and error rate in real time. Caught two nodes running degraded this week that we'd have missed otherwise. This is now the primary ops tool for the relay fleet.</li>
+        <li><strong>P2P handshake protocol v2</strong> — tightened the handshake sequence, removing a round-trip that was introduced as a workaround for a bug that no longer exists. Connection setup time improved by ~40%. This change is backwards-compatible with v1 clients during a transition window.</li>
+        <li><strong>Relay node auto-restart</strong> — nodes now restart automatically on crash rather than waiting for manual intervention. Mean time to recovery dropped from ~12 minutes (time-to-page + response) to under 30 seconds. Uptime improvement this week is partly attributable to this.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The relay throughput gain wasn't targeted — it emerged from the connection pooling rewrite. This changes the economics of running a relay node, which has downstream implications for the token economy model. Matthieu and I need to revisit the cost-per-relay calculation before the next validator incentive simulation run.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+
+      <h3>Zero-knowledge privacy layer</h3>
+      <p>The goal is to let devices prove membership in a Domain without revealing their identity to the relay node — the relay knows a valid device is there, not which device. The ZK proof system is chosen (Groth16 via snarkjs), circuits are written and tested in isolation, and the integration into the join flow is partially done. The blocker is verification time: on-device proof verification is currently taking ~800ms on a mid-range Android (Galaxy A54), which is too slow to sit in the join flow without degrading the user experience noticeably.</p>
+      <p>Two paths being explored: batching verifications to amortize the cost, and moving verification server-side. The batching approach preserves the privacy properties; server-side verification technically does not (the server would see the proof). If batching can get us to under 200ms we use it. If not, we need a design conversation about what server-side verification means for the privacy guarantees we're claiming.</p>
+
+      <h3>Validator incentive design</h3>
+      <p>Working on how validators are rewarded for relay work. The core design question is measurement: a validator that handles many low-quality, high-churn connections should not earn more than one maintaining fewer, stable, high-throughput connections. Three candidate models are on the table, differing in how they weight connection stability versus raw throughput. Running economic simulations this week. The connection pooling throughput gain has changed the input assumptions — need to re-run last week's simulations with updated baseline numbers before presenting a recommendation.</p>
+
+      <h3>Cross-domain transform protocol</h3>
+      <p>Collaboration with Robin on the spatial layer. The protocol defines how pose data transforms between Domains that share a physical boundary — when a device moves from one Domain into an adjacent one, the coordinate frames need to be reconciled without a cloud round-trip. The protocol is fully specified on paper. Implementation is blocked on a coordinate frame convention decision that has been open for three weeks. A dedicated session with Robin is scheduled for Thursday to force a resolution.</p>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+
+      <ul>
+        <li><strong>ZK verification latency decision</strong> — the 800ms on-device verification time is a hard blocker for the privacy layer. If batching can't get us to under 200ms, we need a design decision on server-side verification — and that decision needs input from Nils because it affects the privacy claims we're making publicly. I need this resolved within two weeks or the privacy layer timeline slips into Q3.</li>
+        <li><strong>Coordinate frame convention — Robin</strong> — the cross-domain transform implementation cannot proceed without this decision. Three weeks open. Thursday's session needs to close it.</li>
+        <li><strong>Token economy model review</strong> — need Matthieu to look at the updated cost-per-relay numbers from the connection pooling analysis before the next incentive simulation run. Happy to share the raw numbers async; just need eyes on it before I re-run.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The ZK verification problem is the highest-risk item on the board right now. If server-side verification is the answer, it changes what we can honestly say about the privacy properties of the network — which is a product and communications decision, not just an engineering one.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Benchmark ZK proof batching approaches; decide by end of next week whether batching is viable or we escalate the server-side decision</li>
+        <li>Re-run validator incentive simulations with updated relay throughput baseline</li>
+        <li>Thursday: coordinate frame convention session with Robin — must produce a decision</li>
+        <li>Present validator incentive model recommendation to Nils and Matthieu</li>
+        <li>Begin cross-domain transform implementation once coordinate frame is resolved</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html=document.documentElement,btn=document.getElementById('theme-toggle'),sun=btn.querySelector('.icon-sun'),moon=btn.querySelector('.icon-moon'),dark=document.querySelectorAll('.logo-dark'),light=document.querySelectorAll('.logo-light');
+    function applyTheme(t){html.setAttribute('data-theme',t);localStorage.setItem('auki-theme',t);var l=t==='light';sun.style.display=l?'block':'none';moon.style.display=l?'none':'block';dark.forEach(function(e){e.style.display=l?'none':'block';});light.forEach(function(e){e.style.display=l?'block':'none';});}
+    applyTheme(html.getAttribute('data-theme')||'dark');
+    btn.addEventListener('click',function(){applyTheme(html.getAttribute('data-theme')==='light'?'dark':'light');});
+  })();
+</script>
+</body>
+</html>

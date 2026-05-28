@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robin Lindh — Spatial SDK · Week 20</title>
+<script>
+  /* Set theme before paint to avoid flash */
+  (function() {
+    var t = localStorage.getItem('auki-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg"  alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg"  alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Spatial SDK</h1>
+      <p class="doc-subtitle">Pose conversion overhauled, Domain joining latency down significantly, and the perception pipeline now handles low-texture environments reliably.</p>
+    </div>
+
+    <div class="opening-right">
+      <span class="meta-author">Robin Lindh</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; <span class="meta-week">Week 20</span></span>
+      <div class="meta-projects">
+        <span class="project-tag">Spatial SDK</span>
+        <span class="project-tag">Posemesh</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>We shipped a full rewrite of the pose conversion layer this week — the old implementation had accumulated enough edge-case hacks that it was becoming a reliability risk. The new version is cleaner, better tested, and resolves the coordinate-frame inconsistency causing intermittent drift on ARKit sessions. Domain joining latency dropped from ~420ms to ~180ms as a side effect of the cleanup. The perception pipeline also got a significant fix: feature extraction now falls back correctly in low-texture environments, which unblocks the Gotu warehouse pilot.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">180<span class="unit">ms</span></div>
+          <div class="metric-delta up">↓ from 420ms</div>
+          <div class="metric-label">Domain join latency</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">94<span class="unit">%</span></div>
+          <div class="metric-delta up">↑ from 71%</div>
+          <div class="metric-label">Pose accuracy (low texture)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">3<span class="unit">×</span></div>
+          <div class="metric-delta up">vs. previous week</div>
+          <div class="metric-label">Test coverage added</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Pose conversion rewrite</strong> — replaced the patchwork coordinate-frame conversion with a single clean transform pipeline. Eliminates the ARKit drift bug reported in Week 18. Merged to main, ships in next SDK release.</li>
+        <li><strong>Domain join latency</strong> — reduced from ~420ms to ~180ms by eliminating redundant handshake round-trips in the joining sequence.</li>
+        <li><strong>Low-texture perception fix</strong> — feature extraction now falls back to a broader SIFT descriptor window when the primary ORB pass finds fewer than 40 keypoints. Accuracy in the Gotu warehouse environment goes from 71% to 94%.</li>
+        <li><strong>SDK documentation update</strong> — rewrote the pose conversion and Domain joining guides. Removed two sections describing workarounds that no longer apply.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The Gotu warehouse pilot was blocked on the low-texture perception issue. That unblock is the most commercially significant thing this week — the pilot can now proceed as planned.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+      <h3>Temporal synchronization</h3>
+      <p>Working on the clock sync layer for multi-device Domains. The current implementation assumes devices share a common time reference, which breaks in practice when clocks drift more than ~30ms. The fix involves a lightweight NTP-style protocol running at the Domain level. Design is done; implementation is ~60% complete.</p>
+
+      <h3>Map persistence</h3>
+      <p>Picking up the stalled map persistence work from Q1. The goal is to let Domains retain their spatial map across sessions so devices don't need to re-localize from scratch every time. This week's focus is the load/merge logic for when a persisted map and a live map overlap.</p>
+
+      <h3>Pose SDK API review</h3>
+      <p>Going through the spatial SDK surface with DevRel. Mapping which parts of the API require understanding coordinate geometry to use correctly, with a view to adding higher-level convenience wrappers.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li><strong>Networking layer review needed</strong> — the temporal sync protocol touches the networking layer at the handshake level. Need Matthieu to review the proposed packet format before the implementation can be finalized.</li>
+        <li><strong>Gotu pilot hardware access</strong> — to properly validate the low-texture fix in the actual warehouse environment, need access to the on-site device rig. Tracy said she's coordinating — flagging here in case it needs prioritizing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Complete temporal synchronization implementation and get Networking review</li>
+        <li>Finish map persistence load/merge logic; write integration tests against a multi-session scenario</li>
+        <li>Produce a first draft of the convenience wrapper API with DevRel</li>
+        <li>SDK patch release — bundle pose conversion and low-texture fixes for existing customers</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html  = document.documentElement;
+    var btn   = document.getElementById('theme-toggle');
+    var sun   = btn.querySelector('.icon-sun');
+    var moon  = btn.querySelector('.icon-moon');
+    var dark  = document.querySelectorAll('.logo-dark');
+    var light = document.querySelectorAll('.logo-light');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('auki-theme', theme);
+      var isLight = theme === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none'  : 'block';
+      dark.forEach(function(el)  { el.style.display = isLight ? 'none'  : 'block'; });
+      light.forEach(function(el) { el.style.display = isLight ? 'block' : 'none';  });
+    }
+
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+</body>
+</html>
