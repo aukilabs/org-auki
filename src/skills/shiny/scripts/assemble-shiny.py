@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 """Assemble a self-contained /shiny document and export it as a PDF.
 
-Builds a fully inlined HTML file (fonts + logos embedded), then uses
+Builds a fully inlined HTML file (fonts embedded), then uses
 headless Chrome to render it to PDF. Falls back to HTML if Chrome is
 not available.
 
 Replaces in the HTML skeleton:
   /* SHINY_CSS_PLACEHOLDER */   → tokens.css + shiny-style.css, fonts base64-embedded
-  MONOGRAM_WHITE_B64            → base64 of auki-monogram-white.svg
-  MONOGRAM_BLACK_B64            → base64 of auki-monogram-black.svg
-  WORDMARK_WHITE_B64            → base64 of auki-wordmark-white.svg
-  WORDMARK_BLACK_B64            → base64 of auki-wordmark-black.svg
 
 Usage:
     python3 assemble-shiny.py <skeleton.html> [<output.pdf>]
@@ -78,20 +74,7 @@ def build_html(skeleton: str, strip_remote: bool = False, force_light: bool = Fa
         # Remove the theme attribute entirely if it wasn't set (defaults to dark)
         html = html.replace('<html lang="en">', '<html lang="en" data-theme="light">')
     html = html.replace("  /* SHINY_CSS_PLACEHOLDER */", build_css(strip_remote), 1)
-    for placeholder, asset in {
-        "MONOGRAM_WHITE_B64": b64(ASSETS_DIR / "auki-monogram-white.svg"),
-        "MONOGRAM_BLACK_B64": b64(ASSETS_DIR / "auki-monogram-black.svg"),
-        "WORDMARK_WHITE_B64": b64(ASSETS_DIR / "auki-wordmark-white.svg"),
-        "WORDMARK_BLACK_B64": b64(ASSETS_DIR / "auki-wordmark-black.svg"),
-    }.items():
-        html = html.replace(placeholder, asset)
-
-    remaining = [k for k in ["SHINY_CSS_PLACEHOLDER", "MONOGRAM_WHITE_B64", "WORDMARK_WHITE_B64"] if k in html]
-    if remaining:
-        print(f"ERROR: unresolved placeholders: {remaining}", file=sys.stderr)
-        sys.exit(1)
     return html
-
 def html_to_pdf(html_path: Path, pdf_path: Path) -> bool:
     chrome = find_chrome()
     if not chrome:

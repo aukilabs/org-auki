@@ -1,6 +1,6 @@
 ---
 name: shiny
-description: Takes an uploaded file (PDF, HTML, markdown, or plain text) and re-renders it as a polished, self-contained HTML document using the Auki design system — Auki colours, TT Firs Neue typography, and the full token set. Use when someone wants to make a document feel consistent with the Auki brand.
+description: Takes an uploaded file (PDF, HTML, markdown, or plain text) and re-renders it as a polished, self-contained HTML document using the Auki design system (colours + token set). Use when someone wants a polished, self-contained branded document.
 ---
 
 # /shiny
@@ -89,12 +89,6 @@ Use this structure. Fill in the title, subtitle, mode, and the parsed body conte
 <div class="shiny-top-rule"></div>
 
 <div class="shiny-chrome">
-  <div class="shiny-logo">
-    <img class="logo-mark logo-dark"  src="data:image/svg+xml;base64,MONOGRAM_WHITE_B64" alt="">
-    <img class="logo-mark logo-light" src="data:image/svg+xml;base64,MONOGRAM_BLACK_B64" alt="">
-    <img class="logo-wm logo-dark"    src="data:image/svg+xml;base64,WORDMARK_WHITE_B64" alt="Auki Labs">
-    <img class="logo-wm logo-light"   src="data:image/svg+xml;base64,WORDMARK_BLACK_B64" alt="Auki Labs">
-  </div>
   <button class="shiny-theme-btn" id="theme-btn" aria-label="Toggle light/dark mode">
     <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
     <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -173,7 +167,7 @@ python3 org/src/skills/shiny/scripts/assemble-shiny.py <skeleton.html> <output.h
 
 The assembler replaces:
 - `/* SHINY_CSS_PLACEHOLDER */` → full inlined CSS (tokens + shiny styles, fonts as base64)
-- `MONOGRAM_WHITE_B64` etc. → base64 SVG logos
+ (logo embedding removed for public sync)
 
 Save the output as `shiny-{original-filename}.pdf`. The assembler handles the HTML → PDF conversion using headless Chrome automatically — no extra steps needed. If Chrome is unavailable on the system it will fall back to HTML with a message.
 

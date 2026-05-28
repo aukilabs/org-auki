@@ -42,17 +42,6 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
-.shiny-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.shiny-logo img { display: block; }
-.shiny-logo .logo-mark { height: 24px; }
-.shiny-logo .logo-wm   { height: 18px; }
-
-/* Show/hide logo variants with theme */
 .logo-light { display: none; }
 [data-theme="light"] .logo-dark  { display: none; }
 [data-theme="light"] .logo-light { display: block; }
