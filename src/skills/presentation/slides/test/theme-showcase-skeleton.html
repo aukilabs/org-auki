@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentation System — All Slide Types · May 2026</title>
+
+<script>
+  (function() {
+    var t = localStorage.getItem('auki-theme') || 'DECK_DEFAULT_THEME';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!-- REVEAL_CSS_PLACEHOLDER -->
+<!-- AUKI_THEME_PLACEHOLDER -->
+
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<div class="deck-chrome">
+  <div class="deck-logo">
+    <img class="mark logo-dark"  src="data:image/svg+xml;base64,MONOGRAM_WHITE_B64" alt="">
+    <img class="mark logo-light" src="data:image/svg+xml;base64,MONOGRAM_BLACK_B64" alt="">
+    <img class="wm   logo-dark"  src="data:image/svg+xml;base64,WORDMARK_WHITE_B64" alt="">
+    <img class="wm   logo-light" src="data:image/svg+xml;base64,WORDMARK_BLACK_B64" alt="">
+  </div>
+  <div class="deck-controls">
+    <span class="audience-badge">Internal</span>
+    <button class="deck-btn" id="gallery-btn" aria-label="View attached images" style="display:none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="4.5" cy="6.5" r="1" fill="currentColor"/><path d="M1.5 10L4.5 7L7 9.5L9.5 7L12.5 10" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="deck-btn" id="overview-btn" aria-label="Slide grid (O)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="0" y="0" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8.5" y="0" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="0" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+    </button>
+    <button class="deck-btn" id="pdf-btn" aria-label="Save as PDF">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5v7M4.5 6L7 8.5 9.5 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10.5v1a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="deck-btn" id="theme-btn" aria-label="Toggle light/dark">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="gallery-overlay" id="gallery-overlay">
+  <div class="gallery-header">
+    <span class="gallery-title">Attached images</span>
+    <button class="gallery-close" id="gallery-close">&times;</button>
+  </div>
+  <div class="gallery-scroll"><div class="gallery-grid" id="gallery-grid"></div></div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn is-disabled" id="nav-prev" aria-label="Previous slide"></button>
+  <button class="nav-btn" id="nav-next" aria-label="Next slide"></button>
+</div>
+
+
+<div class="reveal">
+  <div class="slides">
+
+
+    <!-- ================================================================
+    1. TITLE
+    ================================================================= -->
+    <section class="slide-title" data-background-color="var(--bg)">
+      <div></div>
+      <div class="title-bottom">
+        <div class="title-left">
+          <span class="title-top-anchor"></span>
+          <div class="eyebrow">Presentation System · Design Showcase</div>
+          <h1 class="title">All Slide Types</h1>
+          <p class="subtitle">Every component in the design system — one deck, every layout, every pattern.</p>
+        </div>
+        <div class="meta">
+          <span class="meta-author">Charlie Samways</span>
+          <span class="meta-date">19 May 2026 &nbsp;&middot;&nbsp; <span style="color:var(--orange)">Week 21</span></span>
+          <div class="meta-projects">
+            <span class="project-tag">Pulse</span>
+            <span class="project-tag">Design System</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    2. SECTION DIVIDER
+    ================================================================= -->
+    <section class="slide-section" data-background-color="var(--bg)">
+      <div class="section-num">01</div>
+      <div class="section-name-wrap">
+        <h2 class="section-title">Text & Content</h2>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    3. STATEMENT
+    ================================================================= -->
+    <section class="slide-statement" data-background-color="var(--bg)">
+      <div class="statement-wrap">
+        <div class="eyebrow">The point</div>
+        <p class="statement-text">A deck tells a story. The design system gives you the tools — the skill decides what fits.</p>
+      </div>
+      <p class="statement-context">Fourteen slide types, six narrative arcs, one fully self-contained HTML file. No external dependencies except Google Fonts.</p>
+    </section>
+
+
+    <!-- ================================================================
+    4. CONTENT — BULLETS
+    ================================================================= -->
+    <section class="slide-content" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Slide types</span>
+        <h2 class="slide-heading">What's in the system</h2>
+        <p class="slide-desc">Every type has a specific job — use the most precise one for the content you have.</p>
+      </div>
+      <div class="slide-body">
+        <ul>
+          <li><strong>Title, Section, Statement</strong> — structure slides; set the frame for what follows</li>
+          <li><strong>Content</strong> — bullets or prose; the workhorse of any deck</li>
+          <li><strong>Stats, Compare</strong> — when a number is the point and size matters</li>
+          <li><strong>Graphic, Half</strong> — charts, diagrams, SVG with CSS token theming</li>
+          <li><strong>Split, Highlights, Steps, Table, Image</strong> — the rest of the palette</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    5. CONTENT — PROSE
+    ================================================================= -->
+    <section class="slide-content" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Context</span>
+        <h2 class="slide-heading">Why this system exists</h2>
+      </div>
+      <div class="slide-body">
+        <p class="prose">Every presentation generated by the Pulse system is a single self-contained HTML file. No build step, no server, no external dependencies at runtime — open it in any browser, present it, share it, archive it forever.</p>
+        <p class="prose">The design system defines the visual language once. The skill is the author — it reads the content, chooses the narrative arc, picks the slide types, and writes the markup. No template-filling, no form completion.</p>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    6. STATS
+    ================================================================= -->
+    <section class="slide-stats" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Numbers</span>
+        <h2 class="slide-heading">The system by numbers</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">14</div>
+          <div class="stat-delta up">↑ from 8 in v1</div>
+          <div class="stat-label">Slide types</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">6</div>
+          <div class="stat-delta">narrative arcs</div>
+          <div class="stat-label">Story shapes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">1<span class="unit">file</span></div>
+          <div class="stat-delta up">fully self-contained</div>
+          <div class="stat-label">Output format</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">0</div>
+          <div class="stat-delta">runtime dependencies</div>
+          <div class="stat-label">External deps</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    7. GRAPHIC — BAR CHART
+    ================================================================= -->
+    <section class="slide-graphic" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Performance</span>
+        <h2 class="slide-heading">Slide type usage across decks — week 21</h2>
+      </div>
+      <div class="graphic-area">
+        <svg viewBox="0 0 800 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:380px;">
+          <defs><style>
+            .bl { font-family: var(--body, 'DM Sans', sans-serif); font-size: 13px; fill: var(--chart-label); }
+            .bv { font-family: var(--display, sans-serif); font-size: 14px; fill: var(--chart-value); }
+            .bp { fill: var(--orange); opacity: 0.85; }
+            .bs { fill: var(--chart-secondary); }
+            .ax { stroke: var(--chart-axis); stroke-width: 1; }
+          </style></defs>
+
+          <line x1="172" y1="10" x2="172" y2="282" class="ax"/>
+          <line x1="172" y1="282" x2="760" y2="282" class="ax"/>
+
+          <text x="162" y="58"  text-anchor="end" class="bl">slide-content</text>
+          <rect x="176" y="38"  width="416" height="30" class="bp" rx="3"/>
+          <text x="600" y="59"  class="bv" dx="8">52</text>
+
+          <text x="162" y="108" text-anchor="end" class="bl">slide-stats</text>
+          <rect x="176" y="88"  width="248" height="30" class="bp" rx="3"/>
+          <text x="432" y="109" class="bv" dx="8">31</text>
+
+          <text x="162" y="158" text-anchor="end" class="bl">slide-graphic</text>
+          <rect x="176" y="138" width="184" height="30" class="bs" rx="3"/>
+          <text x="368" y="159" class="bv" dx="8">23</text>
+
+          <text x="162" y="208" text-anchor="end" class="bl">slide-highlights</text>
+          <rect x="176" y="188" width="128" height="30" class="bs" rx="3"/>
+          <text x="312" y="209" class="bv" dx="8">16</text>
+
+          <text x="162" y="258" text-anchor="end" class="bl">slide-steps</text>
+          <rect x="176" y="238" width="96"  height="30" class="bs" rx="3"/>
+          <text x="280" y="259" class="bv" dx="8">12</text>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    8. SECTION DIVIDER
+    ================================================================= -->
+    <section class="slide-section" data-background-color="var(--bg)">
+      <div class="section-num">02</div>
+      <div class="section-name-wrap">
+        <h2 class="section-title">Comparison & Layout</h2>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    9. SPLIT
+    ================================================================= -->
+    <section class="slide-split" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Approach</span>
+        <h2 class="slide-heading">Template-filling vs. authoring</h2>
+      </div>
+      <div class="split-body">
+        <div class="split-left">
+          <div class="eyebrow is-issue">Template-filling</div>
+          <ul>
+            <li>Fixed sections in a fixed order — context doesn't change the structure</li>
+            <li>Every slide has a placeholder waiting to be filled</li>
+            <li>Visual output varies only in content, never in shape</li>
+            <li>Produces competent decks that feel the same regardless of what happened</li>
+          </ul>
+        </div>
+        <div class="split-divider"></div>
+        <div class="split-right">
+          <div class="eyebrow">Authoring</div>
+          <ul>
+            <li><strong>Shape follows story</strong> — quiet weeks are short; big weeks earn their length</li>
+            <li>Slide types are chosen for what they communicate, not filled because they exist</li>
+            <li>The arc is committed before any slide is written</li>
+            <li>A reader unfamiliar with the work understands what happened and why it matters</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    10. COMPARE
+    ================================================================= -->
+    <section class="slide-compare" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Impact</span>
+        <h2 class="slide-heading">Time to first meaningful slide</h2>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-before">
+          <div class="compare-label">Manual process</div>
+          <div class="compare-value">4<span class="unit">hrs</span></div>
+          <p class="compare-desc">Gathering content, choosing structure, writing copy, formatting — done manually in presentation software</p>
+        </div>
+        <div class="compare-after">
+          <div class="compare-label">Pulse + skill</div>
+          <div class="compare-value">8<span class="unit">min</span></div>
+          <div class="compare-delta-badge">−97%</div>
+          <p class="compare-desc">Harvest runs automatically, narrative is synthesised, deck is assembled and committed — single command</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    11. HIGHLIGHTS
+    ================================================================= -->
+    <section class="slide-highlights" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Components</span>
+        <h2 class="slide-heading">What the system includes</h2>
+      </div>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-title">Theme system</div>
+          <p class="highlight-desc">CSS custom property tokens for colour, type, and spacing — one source of truth, overridden per brand</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-title">Self-contained output</div>
+          <p class="highlight-desc">Single HTML file with all fonts, logos, CSS, and JS inlined — no network requests at viewing time</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-title">Dark / light toggle</div>
+          <p class="highlight-desc">Instant theme switching via localStorage — persists across sessions, no flash on load</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-title">PDF export</div>
+          <p class="highlight-desc">Print-PDF mode via Reveal.js — pixel-perfect export at 1280×720, no layout artifacts</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-title">Image gallery</div>
+          <p class="highlight-desc">Attach screenshots to any slide — per-slide image button and gallery overlay injected automatically</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-title">Magnify & lightbox</div>
+          <p class="highlight-desc">Hover-to-magnify loupe and click-to-expand lightbox — zero per-slide wiring required</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    12. STEPS
+    ================================================================= -->
+    <section class="slide-steps" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Workflow</span>
+        <h2 class="slide-heading">How a deck gets made</h2>
+      </div>
+      <div class="steps-list">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title">Run /presentation</div>
+            <p class="step-desc">Choose format (slides or one-pager), pick a theme — Auki, Cactus, or Gotu</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title">Harvest runs silently</div>
+            <p class="step-desc">Reads CHANGELOGs, merged PRs, closed issues, and skill diffs for the current week — no input required</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title">Narrative is synthesised</div>
+            <p class="step-desc">The skill reads all material, chooses a story arc, outlines the slide sequence, and confirms with you before writing</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title">Deck is assembled and committed</div>
+            <p class="step-desc">assemble.py inlines all assets, logos are embedded per theme, file is committed to the presentations repo</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    13. SECTION DIVIDER
+    ================================================================= -->
+    <section class="slide-section" data-background-color="var(--bg)">
+      <div class="section-num">03</div>
+      <div class="section-name-wrap">
+        <h2 class="section-title">Data & Visuals</h2>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    14. HALF — TEXT + GRAPHIC
+    ================================================================= -->
+    <section class="slide-half" data-background-color="var(--bg)">
+      <div class="half-left">
+        <div class="slide-heading-wrap">
+          <span class="slide-heading-label">Architecture</span>
+          <h2 class="slide-heading">How themes layer</h2>
+        </div>
+        <div class="slide-body">
+          <ul>
+            <li><strong>reveal.css</strong> — base layout engine, inlined first</li>
+            <li><strong>auki-theme.css</strong> — all slide layouts, CSS tokens, dark/light mode</li>
+            <li><strong>brand-theme.css</strong> — token overrides only; cascade wins via source order</li>
+            <li>No layout rules duplicated — one source of truth for structure</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-right">
+        <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+          <defs><style>
+            .hbx { stroke: var(--chart-box-border); stroke-width: 1; fill: var(--chart-box); }
+            .hbh { stroke: var(--orange); stroke-width: 1.5; fill: rgba(var(--orange), 0.06); }
+            .har { stroke: var(--chart-arrow); stroke-width: 1.5; fill: none; marker-end: url(#harr); }
+            .ht  { font-family: var(--display, sans-serif); font-size: 14px; fill: var(--chart-box-title); }
+            .hs  { font-family: var(--body, sans-serif); font-size: 11px; fill: var(--chart-box-sub); }
+          </style>
+          <marker id="harr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="var(--chart-arrow)"/>
+          </marker></defs>
+
+          <rect x="140" y="20"  width="200" height="56" rx="6" class="hbx"/>
+          <text x="240" y="46"  text-anchor="middle" class="ht">reveal.css</text>
+          <text x="240" y="64"  text-anchor="middle" class="hs">layout engine</text>
+
+          <line x1="240" y1="76" x2="240" y2="104" class="har"/>
+
+          <rect x="100" y="108" width="280" height="56" rx="6" class="hbx"/>
+          <text x="240" y="134" text-anchor="middle" class="ht">auki-theme.css</text>
+          <text x="240" y="152" text-anchor="middle" class="hs">slide layouts · CSS tokens · dark/light</text>
+
+          <line x1="240" y1="164" x2="240" y2="192" class="har"/>
+
+          <rect x="60" y="196" width="360" height="56" rx="6" style="stroke:var(--orange);stroke-width:1.5;fill:rgba(255,255,255,0.03)"/>
+          <text x="240" y="222" text-anchor="middle" class="ht">cactus-theme.css / gotu-theme.css</text>
+          <text x="240" y="240" text-anchor="middle" class="hs">token overrides only — cascade wins via source order</text>
+
+          <line x1="240" y1="252" x2="240" y2="280" class="har"/>
+
+          <rect x="80" y="284"  width="320" height="56" rx="6" class="hbx"/>
+          <text x="240" y="310" text-anchor="middle" class="ht">Assembled HTML</text>
+          <text x="240" y="328" text-anchor="middle" class="hs">single self-contained file</text>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    15. TABLE
+    ================================================================= -->
+    <section class="slide-content" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Inventory</span>
+        <h2 class="slide-heading">Theme token reference</h2>
+      </div>
+      <div class="slide-body">
+        <table class="slide-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Auki</th>
+              <th>Cactus</th>
+              <th>Gotu</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--orange</code></td>
+              <td>#FD9E2F</td>
+              <td>#36D359</td>
+              <td>#2670F8</td>
+              <td>Accent — CTAs, eyebrows, bars</td>
+            </tr>
+            <tr>
+              <td><code>--dark</code></td>
+              <td>#111111</td>
+              <td>#252525</td>
+              <td>#2C2C2C</td>
+              <td>Background (dark mode)</td>
+            </tr>
+            <tr>
+              <td><code>--surface</code></td>
+              <td>#161616</td>
+              <td>#2C2C2C</td>
+              <td>#252525</td>
+              <td>Card / panel background</td>
+            </tr>
+            <tr>
+              <td><code>--display</code></td>
+              <td>TT Firs Neue</td>
+              <td>Questrial</td>
+              <td>DM Sans</td>
+              <td>Headings, eyebrows, labels</td>
+            </tr>
+            <tr>
+              <td><code>--body</code></td>
+              <td>DM Sans</td>
+              <td>Nunito Sans</td>
+              <td>DM Sans</td>
+              <td>Body text, bullets, captions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    16. IMAGE — contained, aspect-ratio-safe, click to expand
+    ================================================================= -->
+    <section class="slide-content" data-background-color="var(--bg)">
+      <div class="slide-heading-wrap">
+        <span class="slide-heading-label">Visual</span>
+        <h2 class="slide-heading">The image slide — click to expand</h2>
+      </div>
+      <div class="slide-body" style="display:flex;align-items:center;justify-content:center;flex:1;min-height:0;">
+        <figure class="expandable" style="display:inline-block;cursor:zoom-in;max-width:100%;">
+          <div class="screenshot-stage">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjcyMCI+PHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iNzIwIiBmaWxsPSIjMWExYTFhIi8+PHJlY3QgeD0iNDgwIiB5PSIyODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iMTYwIiByeD0iOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA0KSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTIpIiBzdHJva2Utd2lkdGg9IjEiLz48dGV4dCB4PSI2NDAiIHk9IjM1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yNSkiIGxldHRlci1zcGFjaW5nPSIwLjA4ZW0iPlNDUkVFTlNIT1QgLyBJTUFHRTwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjM4NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xMikiPjEyODAgw5cgNzIwPC90ZXh0Pjwvc3ZnPg=="
+                 alt="Placeholder image"
+                 style="max-width:100%;max-height:440px;object-fit:contain;border-radius:6px;border:1px solid var(--rule);display:block;" />
+          </div>
+          <p class="muted" style="font-size:0.75rem;margin-top:0.5rem;text-align:center;">Click to enlarge</p>
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+    17. CLOSING
+    ================================================================= -->
+    <section class="slide-closing" data-background-color="var(--bg)">
+      <div class="closing-bottom">
+        <div class="eyebrow">Design System · Week 21</div>
+        <h2 class="closing-heading">That's every slide type.</h2>
+        <p class="closing-body">Questions? Find Charlie on Discord — DM directly.</p>
+      </div>
+    </section>
+
+
+  </div>
+</div>
+
+
+<!-- REVEAL_JS_PLACEHOLDER -->
+
+<script>
+  (function() {
+    if (window._appendixRan) return;
+    window._appendixRan = true;
+    if (!/[?&]print-pdf/.test(window.location.search)) return;
+    var slidesEl = document.querySelector('.reveal .slides');
+    if (!slidesEl) return;
+    Array.from(slidesEl.querySelectorAll(':scope > section')).forEach(function(section, idx) {
+      var src = section.getAttribute('data-image');
+      var caption = section.getAttribute('data-image-caption') || '';
+      if (!src) return;
+      var s = document.createElement('section');
+      s.className = 'slide-image-appendix';
+      s.innerHTML = '<div class="appendix-eyebrow">Slide ' + (idx+1) + (caption ? ' · ' + caption : '') + '</div><img class="appendix-img" src="' + src + '" alt="">';
+      slidesEl.appendChild(s);
+    });
+  })();
+</script>
+
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720, margin: 0.04, minScale: 0.2, maxScale: 2.0,
+    transition: 'slide', transitionSpeed: 'fast', backgroundTransition: 'fade',
+    controls: true, controlsTutorial: false, controlsLayout: 'bottom-right',
+    controlsBackArrows: 'faded', progress: true, slideNumber: 'c/t',
+    showSlideNumber: 'all', hash: true, history: false, keyboard: true,
+    overview: true, center: false, touch: true, loop: false, rtl: false,
+    shuffle: false, fragments: true, fragmentInURL: true, embedded: false,
+    help: true, pauseKey: 'b', showNotes: false, autoSlide: 0,
+    autoSlideStoppable: true, mouseWheel: false, previewLinks: false,
+    postMessage: true, postMessageEvents: false,
+    focusBodyOnPageVisibilityChange: true,
+  });
+</script>
+
+<script>
+  document.getElementById('overview-btn').addEventListener('click', function() { Reveal.toggleOverview(); });
+  document.getElementById('pdf-btn').addEventListener('click', function() { window.open(window.location.pathname + '?print-pdf', '_blank'); });
+</script>
+
+<script>
+  (function() {
+    var html = document.documentElement;
+    var btn = document.getElementById('theme-btn');
+    var sun = btn.querySelector('.icon-sun');
+    var moon = btn.querySelector('.icon-moon');
+    var darks = document.querySelectorAll('.logo-dark');
+    var lights = document.querySelectorAll('.logo-light');
+    function applyTheme(t) {
+      html.setAttribute('data-theme', t);
+      localStorage.setItem('auki-theme', t);
+      var isLight = t === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none' : 'block';
+      darks.forEach(function(el)  { el.style.display = isLight ? 'none' : 'block'; });
+      lights.forEach(function(el) { el.style.display = isLight ? 'block' : 'none'; });
+    }
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+<script>
+  (function() {
+    var SLIDE_H = 720;
+    function fitTitle(slide) {
+      var title = slide.querySelector('.title');
+      if (!title) return;
+      title.style.fontSize = '';
+      var size = parseInt(window.getComputedStyle(title).fontSize, 10) || 72;
+      var min = 36;
+      while (slide.scrollHeight > SLIDE_H && size > min) { size -= 3; title.style.fontSize = size + 'px'; title.style.lineHeight = size < 60 ? '1.05' : '0.92'; }
+    }
+    function fitContent(slide) {
+      if (slide.scrollHeight <= SLIDE_H) return;
+      var c = slide.querySelector('.slide-body') || slide.querySelector('.stats-grid') || slide.querySelector('.compare-grid') || slide.querySelector('.statement-wrap');
+      if (!c) return;
+      c.style.fontSize = '';
+      var size = parseInt(window.getComputedStyle(c).fontSize, 10) || 17;
+      var min = 11;
+      while (slide.scrollHeight > SLIDE_H && size > min) { size = Math.max(size - 1, min); c.style.fontSize = size + 'px'; }
+    }
+    function fitSteps(slide) {
+      if (slide.scrollHeight <= SLIDE_H) return;
+      var steps = Array.from(slide.querySelectorAll('.step'));
+      if (!steps.length) return;
+      var ts = 19, ds = 15, ns = 32, pad = 18;
+      while (slide.scrollHeight > SLIDE_H && ts > 12) {
+        ts = Math.max(ts-1,12); ds = Math.max(ds-1,10); ns = Math.max(ns-1,18); pad = Math.max(pad-1,8);
+        steps.forEach(function(s) {
+          s.style.paddingTop = pad + 'px'; s.style.paddingBottom = pad + 'px';
+          var t = s.querySelector('.step-title'), d = s.querySelector('.step-desc'), n = s.querySelector('.step-num');
+          if (t) t.style.fontSize = ts + 'px'; if (d) d.style.fontSize = ds + 'px'; if (n) n.style.fontSize = ns + 'px';
+        });
+      }
+    }
+    function fitAll() {
+      document.querySelectorAll('.reveal .slides section').forEach(function(slide) {
+        if (slide.classList.contains('slide-section')) return;
+        if (slide.classList.contains('slide-title')) { fitTitle(slide); return; }
+        if (slide.classList.contains('slide-steps')) { fitSteps(slide); return; }
+        fitContent(slide);
+      });
+    }
+    Reveal.on('ready', fitAll);
+    Reveal.on('resize', fitAll);
+  })();
+</script>
+
+<script>
+  (function setupMagnifiers() {
+    var ZOOM = 2.4, DIAM = 160;
+    function init() {
+      document.querySelectorAll('figure.magnify-area').forEach(function(fig) {
+        if (fig._magnifyReady) return; fig._magnifyReady = true;
+        var img = fig.querySelector('img'), loupe = fig.querySelector('.loupe');
+        if (!img || !loupe) return;
+        loupe.style.cssText = 'position:absolute;width:'+DIAM+'px;height:'+DIAM+'px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.25);box-shadow:0 4px 24px rgba(0,0,0,0.5);pointer-events:none;opacity:0;transition:opacity .15s';
+        var zi = document.createElement('img'); zi.src = img.src; zi.style.cssText = 'position:absolute;transform-origin:top left;pointer-events:none;'; loupe.appendChild(zi);
+        fig.addEventListener('mousemove', function(e) {
+          var r = img.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+          if (x < 0 || y < 0 || x > r.width || y > r.height) { loupe.style.opacity = 0; return; }
+          loupe.style.opacity = 1; loupe.style.left = (x - DIAM/2) + 'px'; loupe.style.top = (y - DIAM/2) + 'px';
+          var sx = img.naturalWidth / r.width, sy = img.naturalHeight / r.height;
+          zi.style.width = (img.naturalWidth * ZOOM / sx) + 'px'; zi.style.height = (img.naturalHeight * ZOOM / sy) + 'px';
+          zi.style.left = (-x * ZOOM + DIAM/2) + 'px'; zi.style.top = (-y * ZOOM + DIAM/2) + 'px';
+        });
+        fig.addEventListener('mouseleave', function() { loupe.style.opacity = 0; });
+      });
+    }
+    ['ready','slidechanged','resize','slidetransitionend'].forEach(function(ev) { Reveal.on(ev, init); });
+  })();
+</script>
+
+<script>
+  (function setupLightbox() {
+    var ov = document.createElement('div'), oim = document.createElement('img'), cls = document.createElement('button');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;cursor:zoom-out;';
+    oim.style.cssText = 'max-width:92vw;max-height:92vh;object-fit:contain;border-radius:4px;box-shadow:0 8px 48px rgba(0,0,0,0.6);';
+    cls.style.cssText = 'position:fixed;top:20px;right:24px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;opacity:.7;line-height:1;padding:8px;';
+    cls.innerHTML = '&times;'; cls.setAttribute('aria-label','Close lightbox');
+    ov.appendChild(oim); ov.appendChild(cls); document.body.appendChild(ov);
+    function open(src) { oim.src = src; ov.style.display = 'flex'; document.addEventListener('keydown', onKey, true); }
+    function close() { ov.style.display = 'none'; document.removeEventListener('keydown', onKey, true); }
+    function onKey(e) { if (e.key === 'Escape') { e.stopPropagation(); close(); } }
+    ov.addEventListener('click', function(e) { if (e.target !== cls) close(); });
+    cls.addEventListener('click', close);
+    window._openLightbox = open;
+    function init() {
+      document.querySelectorAll('figure.expandable').forEach(function(fig) {
+        if (fig._lbReady) return; fig._lbReady = true;
+        var img = fig.querySelector('img'); if (!img) return; img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function(e) { e.stopPropagation(); open(img.src); });
+      });
+    }
+    Reveal.on('ready', init); Reveal.on('slidechanged', init);
+  })();
+</script>
+
+<script>
+  (function() {
+    Reveal.on('ready', function() {
+      var allSlides = Array.from(document.querySelectorAll('.reveal .slides section'));
+      var imageSlides = [];
+      allSlides.forEach(function(slide, idx) {
+        var src = slide.getAttribute('data-image'), caption = slide.getAttribute('data-image-caption') || '';
+        if (!src) return;
+        imageSlides.push({ src: src, caption: caption, slideNum: idx + 1 });
+        var btn = document.createElement('button');
+        btn.className = 'slide-img-btn'; btn.setAttribute('aria-label','View attached image');
+        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><path d="M1.5 9.5L4.5 6.5L7 9L9.5 6.5L12.5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>Image</span>';
+        btn.addEventListener('click', function(e) { e.stopPropagation(); window._openLightbox(src); });
+        slide.appendChild(btn);
+      });
+      if (!imageSlides.length) return;
+      document.getElementById('gallery-btn').style.display = 'flex';
+      var grid = document.getElementById('gallery-grid');
+      imageSlides.forEach(function(item) {
+        var el = document.createElement('div'); el.className = 'gallery-item';
+        el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy"><div class="gallery-item-meta"><div class="gallery-item-slide">Slide ' + item.slideNum + '</div>' + (item.caption ? '<div class="gallery-item-caption">' + item.caption + '</div>' : '') + '</div>';
+        el.addEventListener('click', function() { window._openLightbox(item.src); });
+        grid.appendChild(el);
+      });
+    });
+    document.getElementById('gallery-btn').addEventListener('click', function() { document.getElementById('gallery-overlay').classList.add('open'); });
+    document.getElementById('gallery-close').addEventListener('click', function() { document.getElementById('gallery-overlay').classList.remove('open'); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') document.getElementById('gallery-overlay').classList.remove('open'); });
+  })();
+</script>
+
+<script>
+  (function() {
+    if (!/[?&]print-pdf/.test(window.location.search)) return;
+    var style = document.createElement('style'); style.textContent = '@media print { ._pdf-overlay { display: none !important; } }'; document.head.appendChild(style);
+    var overlay = document.createElement('div'); overlay.className = '_pdf-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#0f0f0f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:system-ui,sans-serif';
+    overlay.innerHTML = '<div style="width:36px;height:3px;background:var(--orange,#FD9E2F);border-radius:2px"></div><p style="color:rgba(255,255,255,0.55);font-size:13px;letter-spacing:0.06em;margin:0">Preparing PDF…</p>';
+    document.body.appendChild(overlay);
+    window.addEventListener('load', function() { setTimeout(function() { window.print(); window.addEventListener('afterprint', function() { window.close(); }); }, 600); });
+  })();
+</script>
+
+<script>
+  (function() {
+    var prev = document.getElementById('nav-prev'), next = document.getElementById('nav-next');
+    function update() {
+      var idx = Reveal.getIndices(), total = document.querySelectorAll('.reveal .slides > section').length;
+      prev.classList.toggle('is-disabled', idx.h === 0);
+      next.classList.toggle('is-disabled', idx.h >= total - 1);
+    }
+    prev.addEventListener('click', function() { Reveal.prev(); });
+    next.addEventListener('click', function() { Reveal.next(); });
+    Reveal.on('ready', update); Reveal.on('slidechanged', update);
+  })();
+</script>
+
+</body>
+</html>

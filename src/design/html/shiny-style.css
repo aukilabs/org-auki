@@ -1,0 +1,446 @@
+/* ============================================================
+   Auki Labs — /shiny document skin
+   Standalone CSS for the /shiny skill output.
+   All tokens inlined by assemble-shiny.py — do not @import here.
+   ============================================================ */
+
+/* ── Reset ──────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: var(--fw-light);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Page chrome ─────────────────────────────────────────── */
+
+.shiny-top-rule {
+  height: 3px;
+  background: linear-gradient(90deg, #FD9E2F 0%, #FFBE70 40%, #FD9E2F 70%, #D4710A 100%);
+}
+
+.shiny-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 48px;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.shiny-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shiny-logo img { display: block; }
+.shiny-logo .logo-mark { height: 24px; }
+.shiny-logo .logo-wm   { height: 18px; }
+
+/* Show/hide logo variants with theme */
+.logo-light { display: none; }
+[data-theme="light"] .logo-dark  { display: none; }
+[data-theme="light"] .logo-light { display: block; }
+
+.shiny-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 160ms, color 160ms;
+  flex-shrink: 0;
+}
+
+.shiny-theme-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.icon-sun  { display: none; }
+.icon-moon { display: block; }
+[data-theme="light"] .icon-sun  { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+
+/* ── Body layout ─────────────────────────────────────────── */
+
+.shiny-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 72px 48px 120px;
+}
+
+/* ── Title block ─────────────────────────────────────────── */
+
+.shiny-title-block {
+  margin-bottom: 72px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.shiny-title {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: var(--fw-regular);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  margin: 0 0 20px;
+}
+
+.shiny-subtitle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: var(--fw-light);
+  color: var(--fg-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Content typography ──────────────────────────────────── */
+
+.shiny-content h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin: 56px 0 16px;
+  line-height: 1.2;
+}
+
+.shiny-content h2:first-child { margin-top: 0; }
+
+.shiny-content h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: var(--fw-regular);
+  color: var(--fg);
+  margin: 32px 0 10px;
+  line-height: 1.3;
+}
+
+.shiny-content p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--fg);
+  margin: 0 0 18px;
+}
+
+.shiny-content p:last-child { margin-bottom: 0; }
+
+.shiny-content ul,
+.shiny-content ol {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.shiny-content li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+.shiny-content ul li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--fg-muted);
+  font-weight: var(--fw-regular);
+}
+
+.shiny-content ol { counter-reset: ol; }
+.shiny-content ol li { counter-increment: ol; }
+.shiny-content ol li::before {
+  content: counter(ol) ".";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--accent);
+  top: 4px;
+}
+
+.shiny-content strong, .shiny-content b {
+  font-weight: var(--fw-medium);
+  color: var(--fg);
+}
+
+.shiny-content em, .shiny-content i {
+  font-style: italic;
+}
+
+.shiny-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(253,158,47,0.4);
+}
+
+.shiny-content a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ── Section grouping ────────────────────────────────────── */
+
+.shiny-section {
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+}
+
+.shiny-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ── Callout ─────────────────────────────────────────────── */
+
+.shiny-callout {
+  border-left: 2px solid var(--accent);
+  background: rgba(253, 158, 47, 0.05);
+  border-radius: 0 6px 6px 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+}
+
+.shiny-callout p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ── Soft callout (accent border, no background tint) ────── */
+
+.shiny-callout--soft {
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  padding: 14px 20px;
+  margin: 24px 0;
+}
+
+.shiny-callout--soft p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+/* ── Card (titled enclosed block) ───────────────────────── */
+
+.shiny-card {
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 22px 26px;
+  margin: 12px 0 20px;
+  background: var(--bg-raised);
+}
+
+.shiny-card-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin: 0 0 10px;
+}
+
+.shiny-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+.shiny-card ul,
+.shiny-card ol {
+  margin: 0;
+}
+
+/* ── Compare table (two-column current vs. proposed) ─────── */
+
+.shiny-content table.shiny-compare {
+  border-top: 2px solid var(--accent);
+}
+
+.shiny-content table.shiny-compare th {
+  background: var(--bg-raised);
+  color: var(--fg);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+/* ── Code ────────────────────────────────────────────────── */
+
+.shiny-content code {
+  font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--fg);
+}
+
+.shiny-content pre {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 18px 22px;
+  overflow-x: auto;
+  margin: 18px 0;
+}
+
+.shiny-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+
+.shiny-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+}
+
+.shiny-content th {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.shiny-content td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.shiny-content tr:last-child td { border-bottom: none; }
+
+/* ── Footer ──────────────────────────────────────────────── */
+
+.shiny-footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 48px 48px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--fg-muted);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+}
+
+/* ── Light mode overrides ────────────────────────────────── */
+
+[data-theme="light"] {
+  --bg:          #F5F5F5;
+  --bg-raised:   #FFFFFF;
+  --fg:          #0F0F0F;
+  --fg-muted:    #858585;
+  --border:      rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.16);
+  --accent:      #C47A1A;
+}
+
+[data-theme="light"] .shiny-callout {
+  background: rgba(196, 122, 26, 0.05);
+  border-color: #C47A1A;
+}
+
+/* ── Print ───────────────────────────────────────────────── */
+
+@media print {
+  @page { size: A4; margin: 20mm 18mm; }
+
+  /* Hide all interactive chrome */
+  .shiny-chrome,
+  .shiny-top-rule,
+  .shiny-theme-btn { display: none !important; }
+
+  /* Force white background and dark text regardless of theme */
+  html, body, .shiny-body, .shiny-section, .shiny-content,
+  .shiny-title-block, .shiny-callout {
+    background: white !important;
+    color: #111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body { font-size: 10.5pt; line-height: 1.6; }
+  .shiny-body { max-width: 100%; padding: 0; }
+  .shiny-title { font-size: 28pt; color: #111 !important; }
+  .shiny-subtitle { color: #555 !important; }
+  .shiny-content h2 { font-size: 14pt; color: #111 !important; page-break-after: avoid; }
+  .shiny-content h3 { font-size: 11pt; color: #111 !important; page-break-after: avoid; }
+  .shiny-content p, .shiny-content li { color: #222 !important; }
+  .shiny-content pre { break-inside: avoid; background: #f5f5f5 !important; border-color: #ddd !important; }
+  .shiny-content code { background: #f5f5f5 !important; border-color: #ddd !important; color: #333 !important; }
+  .shiny-callout { background: #fff8f0 !important; border-color: #FD9E2F !important; }
+  .shiny-callout p { color: #222 !important; }
+  .shiny-callout--soft { border-color: #FD9E2F !important; }
+  .shiny-callout--soft p { color: #444 !important; }
+  .shiny-card { background: #fafafa !important; border-color: #ddd !important; }
+  .shiny-card-title { color: #C47A1A !important; }
+  .shiny-content table.shiny-compare th { background: #f0f0f0 !important; color: #111 !important; border-color: #ddd !important; }
+  .shiny-section { border-bottom-color: #ddd !important; }
+  .shiny-title-block { border-bottom-color: #ddd !important; }
+
+  .shiny-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white !important;
+    padding: 6pt 18mm;
+    border-top: 1px solid #ddd;
+    color: #888 !important;
+    font-size: 8pt;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .shiny-chrome { padding: 12px 20px; }
+  .shiny-body { padding: 40px 20px 80px; }
+  .shiny-title { font-size: 36px; }
+  .shiny-footer { padding: 20px; flex-direction: column; gap: 6px; }
+}

@@ -1,181 +1,127 @@
 ---
 name: quest-scaffold
-description: Use when creating a cross-repo project (a "quest") — work that spans multiple Auki repos where no single repo can own the state. Produces the quest landing page under org-auki/src/quests/{slug}/ with README (identity), AGENTS, CONTRIBUTING, roadmap, sprints, changelog, parking_lot. If the work fits cleanly in one repo, use project-scaffold instead.
+description: Use when creating a cross-repo quest. Everything lives in a single GitHub Project created from the Auki Kanban Template ([REDACTED - link to your organization's Kanban template]). The project README holds the demo definition, demo script, constraints, tests, and repos overview. Questions and Tasks are cards on the Kanban board. No git mirror, no Notion, no separate changelog/relay files. Minimal token footprint.
 ---
 
-# Scaffolding a new quest
+# Quest Scaffolding (GitHub Project Only)
 
-A **quest** is a cross-repo project. Quests live at org level in `org-auki/src/quests/{slug}/` so every project lead has visibility.
+A **quest** is a sprint-sized, multi-repo project working towards a clearly defined demo. The **only** coordination surface is a GitHub Project created from the Auki Kanban Template.
 
-Use a quest when a single repo can't own the state. Otherwise prefer `project-scaffold`.
+This is the lightest possible version — agents read the project README and the board cards directly. No local files, no Notion dumps, no extra Markdown mirrors.
 
-## Shape
+## Where everything lives
 
-| File | Purpose |
-|------|---------|
-| `README.md` | Identity file — landing page, pitch, repos involved, collaborators. This is the quest's "why." |
-| `AGENTS.md` | Entry point for an AI agent loaded into this quest directly. See starter below. |
-| `CONTRIBUTING.md` | Logging conventions for this quest. Full content — not a pointer — so each quest can diverge where it makes sense. See starter below. |
-| `roadmap.md` | Phased plan across all repos. |
-| `sprints.md` | Links + tight summaries of each sub-repo's `sprint.md`. |
-| `CHANGELOG.md` | Cross-repo decisions only. Per-repo minutiae stays in the sub-repos. |
-| `parking_lot.md` | Cross-repo open questions only. Per-repo questions stay in the sub-repos. |
+- **Single GitHub Project** (created from the Auki Kanban Template #4)
+  - Must have the custom `Status` single-select field with these exact options:
+    - `Questions`
+    - `Exploring`
+    - `Tasks`
+    - `In progress`
+    - `In review`
+    - `Done`
+  - **Project README** contains:
+    - Demo definition (top)
+    - `## Demo script` (numbered sequential steps)
+    - `## Scope`
+    - `## Constraints`
+    - `## Repos` (overview table)
+    - `## Tests`
+  - **Questions** = cards with Status = "Questions"
+  - **Tasks** = cards using the other Status values
+  - All other state lives in card fields (`Repo`, `Owner`, etc.)
 
-Per-repo details stay in each sub-repo's own files — the quest is an aggregation layer, not a replacement.
+No `CHANGELOG.md`, no `relay_log.md`, no `AGENTS.md`, no `org/src/quests/{slug}/` folder.
 
-## Steps
+## Step 1 — Define the demo
 
-1. Add a row for the quest to `org-auki/src/projects.md` (Quests section — canonical index of projects + quests) **first**.
-2. Open a PR against `org` adding `src/quests/{slug}/` with the files above, using the starter content in the next section for `AGENTS.md` and `CONTRIBUTING.md`.
-3. Link each participating repo's `sprint.md` from `sprints.md`.
-4. Update `org-auki/src/quests/README.md` to list the new quest.
-5. **Critically:** Go into each participating sub-repo and edit its `CHANGELOG.md` file to add the `Upstream Quest:` pointer right below the `# Changelog` heading, so the sub-repo's AI agents know to dual-write decisions to the quest.
+Ask the user for the demo definition. This becomes the first paragraph in the **project README**.
 
-## Starter content
+## Step 2 — Create the GitHub Project
 
-### `AGENTS.md`
+The agent should create the project using the `copyProjectV2` GraphQL mutation (this preserves the custom `Status` field from the template).
 
-```markdown
-You are in the {quest-name} quest — a cross-repo project tracked at `aukilabs/org-auki → src/quests/{quest-name}/`. This directory is an aggregation layer across multiple repos.
+**Template project ID**: `[REDACTED - insert your organization's Kanban template project ID]` (Auki Kanban template at [REDACTED - link to your organization's Kanban template])
 
-At session start, read:
+**Mutation example** (run via `gh api graphql`):
 
-- `README.md` — what this quest is, which repos are involved, who the collaborators are
-- `sprints.md` — current activity across sub-repos, with links
-- `roadmap.md` — phasing and cross-repo dependencies
-- `CHANGELOG.md` — the full aggregated decision log across every participating repo (per-repo decisions are duplicated here so the quest is the full view)
-- `parking_lot.md` — cross-repo open questions
-
-Per-repo code and implementation detail live in the sub-repos themselves — follow the links in `sprints.md` when you need them. Broader Auki context (mission, team, methods, skills library) lives one level up in `aukilabs/org-auki`.
-
-Log every decision that affects this quest to `CHANGELOG.md` with an **Author** field (not PromptID) — cross-repo decisions originate here, per-repo decisions get duplicated here from their sub-repo's own changelog. See `CONTRIBUTING.md` for the format.
+```graphql
+mutation {
+  copyProjectV2(input: {
+    projectId: "[REDACTED - insert your organization's Kanban template project ID]",
+    ownerId: "[REDACTED - insert your organization's owner ID]",   # aukilabs organization global ID
+    title: "Quest: {Quest Name}"
+  }) {
+    projectV2 {
+      id
+      number
+      url
+    }
+  }
+}
 ```
 
-### `CONTRIBUTING.md`
+After creation, immediately set:
+- `shortDescription` via `updateProjectV2`
+- `readme` via `updateProjectV2` (containing the full demo definition + `## Demo script`, Scope, Constraints, Repos, and Tests)
 
-```markdown
-# Contributing to the {Quest Name} quest
+**Note**: Using plain `gh project create` produces a blank project missing the custom Status column and should be avoided.
 
-Every decision affecting this quest — whether cross-repo or per-repo — should be logged in `CHANGELOG.md` here. Per-repo decisions are *duplicated* here (on top of the entry in the sub-repo's own `CHANGELOG.md`) so the quest has the full aggregated view across all participating repos.
+## Step 3 — Add initial cards
 
-## Changelog
+- Create one card per participating repo in the `## Repos` section of the README (or as repo cards).
+- Seed any known high-level constraints and tests into the README.
+- Leave **Questions** and **Tasks** empty until agents start surfacing them as cards.
 
-Append-only, prepend latest entry on top. Each entry is a level-3 heading followed by 1–2 sentences: what changed and the decision behind it. Blank line between entries.
+## Step 4 — Spawn agents
 
-Heading format: `### {Author} · {Timestamp}` — e.g. `### Nils · Apr 2, 21:03 HKT, 2026`.
+Use the spawn helper:
 
-Quests use an **Author** field (not PromptID) because they have multiple contributors.
-
-Body: tight — 1–2 sentences. Entries duplicated from a sub-repo's changelog can optionally link back to the sub-repo for longer context.
-
-### Good changelog entries
-
-**Bad — too thin:** `Updated roadmap.` No information.
-
-**Bad — too long:** Paragraph-length recaps. Transcripts aren't decisions.
-
-**Good:** `Moved CTRL-R integration to Phase 3 after their team confirmed their old-SDK prototype won't be ready to migrate until late Q3.`
-
-## Quest scope
-
-- **Cross-repo decisions** → this `CHANGELOG.md`
-- **Per-repo decisions in any sub-repo** → log in the sub-repo's own `CHANGELOG.md` *and* duplicate here, so the quest is the full view
-- **Personal Exocortex** → After updating the quest, you MUST also log your work in your user's personal exocortex `promptlog.md` and `changelog.md`.
-- **Cross-repo open questions** → `parking_lot.md`
-- **Per-repo open questions** → currently stay in the sub-repo's own `parking_lot.md` only (aggregation policy is narrower for parking lots than changelogs — raise with the quest lead if a broader view is wanted for a specific quest)
-
-## Quest-specific conventions
-
-{Fill in anything specific to this quest — communication cadence, review process, cross-repo branch/PR naming, etc. Remove this section if no quest-specific additions apply yet.}
+```bash
+bash scripts/spawn-quest.sh {slug} {repo1} {repo2} ...
 ```
 
-### `README.md`
+Kickoff prompt for each agent:
 
-```markdown
-# Quest: {Name}
+> You are {repo} claude for the {quest-name} quest. The quest lives entirely in this GitHub Project: {project-url}. Read the project README, locate your repo, report current status by updating the Repos overview, and surface questions by creating new cards in the Questions / Parking Lot area. Do not pre-resolve questions.
 
-{Pitch: one paragraph on what this quest is and why no single repo can own it.}
+Agents use the GitHub web UI or `gh` CLI to read the README and manage cards.
 
-See [roadmap.md](roadmap.md) for phasing, [sprints.md](sprints.md) for what's active in each sub-repo, [CHANGELOG.md](CHANGELOG.md) for cross-repo decisions, [parking_lot.md](parking_lot.md) for open questions.
+## Step 5 — Human answers questions
 
-## Repos
+When the human answers a question card, they convert it into a Task card (change status / move to Tasks column, or create a linked task card). The original question card can be closed or moved to "Answered".
 
-| Repo | Role |
-|------|------|
-| [`aukilabs/{repo1}`](https://github.com/aukilabs/{repo1}) | {role on quest} |
-| [`aukilabs/{repo2}`](https://github.com/aukilabs/{repo2}) | {role on quest} |
+## Step 6 — Orchestrator
 
-## Collaborators
+The existing `relay-merge.sh` + webhook setup still works. On merge events, the orchestrator sends `[orchestrator]` messages to the tmux sessions. Agents react by checking the project board for newly unblocked cards.
 
-| Person | Role on the quest |
-|--------|-------------------|
-| {Name} | {role} |
-```
+Receipts can be left as comments on the relevant cards or in the project activity log (no separate `relay_log.md` needed).
 
-### `CHANGELOG.md`
+## Card conventions
 
-```markdown
-# Changelog — {Quest Name} Quest
+- **Question cards**: Use a consistent label (e.g. `question`) or a dedicated column. Include `Repo`, short description, and any recommendation in the card body.
+- **Task cards**: Use Status columns. Include originating question (if any), dependencies, and `Repo` in the card.
+- **Tests**: Live in the project README (under `## Tests`). They are only binding once the human approves them.
 
-Cross-repo decisions only. Per-repo decisions stay in each sub-repo's own `CHANGELOG.md`. Append-only, latest on top.
+## Why this version?
 
-### {Author} · {Timestamp HKT, YYYY}
+- Lowest possible token usage (agents only read the project README + card lists)
+- Single source of truth
+- Visual Kanban + structured cards
+- No maintenance of parallel git mirrors or Notion pages
 
-Quest scaffolded.
-```
+## Implementation Notes (from real usage)
 
-### `parking_lot.md`
+- Always create the project using the `copyProjectV2` GraphQL mutation (or instruct the agent to do so). This preserves the custom `Status` field from the template.
+- The template project ID is `[REDACTED - insert your organization's Kanban template project ID]`.
+- After creation, the README and shortDescription must be set via the `updateProjectV2` mutation.
+- The custom Status field options (`Questions`, `Exploring`, `Tasks`, `In progress`, `In review`, `Done`) are critical for the workflow.
+- Never use plain `gh project create` — it produces a project without the required Status column.
+- Only create Question cards for things that are genuinely unresolved. Most items in an implementation plan are already answered and should become Task cards instead.
+- Use `addProjectV2DraftIssue` for rapid population of the board.
+- Always set the Status field explicitly when creating cards so they land in the correct column.
 
-```markdown
-# Parking Lot — {Quest Name} Quest
+## References
 
-Cross-repo open questions only. Per-repo questions stay in each sub-repo's own `parking_lot.md`.
-
-## Open
-
-- {cross-repo question}
-
-## Resolved
-
-_(Move items here with a one-line note on how they were resolved.)_
-```
-
-### `roadmap.md`
-
-```markdown
-# Roadmap — {Quest Name} Quest
-
-Phased plan across all participating repos. Aligned with `org-auki/roadmap.md`.
-
-## Phase 1 — {name}
-
-- {cross-repo milestone}
-
-## Phase 2 — {name}
-
-- {milestone}
-
-## Dependencies
-
-{Repos, people, external decisions this quest depends on.}
-```
-
-### `sprints.md`
-
-```markdown
-# Sprints — {Quest Name} Quest
-
-Links + tight summaries of each sub-repo's current sprint. Aggregation layer — per-repo detail stays in the sub-repos.
-
-## {repo1}
-
-{One-line summary of this week's focus.} See [`{repo1}/src/sprint.md`](https://github.com/aukilabs/{repo1}/blob/main/src/sprint.md).
-
-## {repo2}
-
-{One-line summary.} See [`{repo2}/src/sprint.md`](https://github.com/aukilabs/{repo2}/blob/main/src/sprint.md).
-```
-
-## Reference
-
-See `org-auki/src/quests/README.md` for the quest-level index and `org-auki/src/projects.md` for the combined project+quest index. First quest is `fehu/` (auki + relay + hagall + hagall-common) — named after the rune to keep the quest namespace distinct from project/repo names.
+- `scripts/spawn-quest.sh` — spawn helper (no Notion dependency)
+- `scripts/relay-merge.sh` — orchestrator relay (unchanged)
+- `templates/repo-agents-md-snippet.md` — Quest Mode instructions to paste into each repo's AGENTS.md / CLAUDE.md (updated version that points to the project URL instead of a local folder)

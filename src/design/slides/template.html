@@ -1,0 +1,1090 @@
+<!doctype html>
+<!--
+  AUKI LABS — SLIDES TEMPLATE
+  ═══════════════════════════════════════════════════════════════════════
+
+  This file is a COMPONENT REFERENCE, not a fill-in-the-blanks form.
+  The skill reads this to understand every available slide type,
+  then assembles only the ones the content actually calls for.
+
+  THE SKILL IS THE AUTHOR — not a template-filler. This file shows
+  the full palette of tools. The skill picks what fits the story.
+
+  STRUCTURE (always required):
+    page shell (top-rule + deck-chrome)
+    → .reveal > .slides
+      → title slide (always first)
+      → [section divider] (optional — skill decides)
+      → [statement slide] (optional — for TL;DR or landmark beats)
+      → content / stats / graphic / split / image slides (skill decides)
+      → [closing slide] (optional)
+
+  DECK LENGTH GUIDE:
+    Short  (6-10 slides)  — tight week, single workstream
+    Standard (10-18 slides) — typical week with 2-3 threads
+    Long   (18-30 slides) — major release, multi-team digest
+
+  AUDIENCE VARIANTS:
+    internal   → audience-badge class="audience-badge"            text="Internal"
+    community  → audience-badge class="audience-badge community"  text="Community"
+    investor   → audience-badge class="audience-badge investor"   text="Investor"
+    Community and investor: omit blockers/asks slides, apply NDA redaction.
+
+  CSS: the skill reads design/slides/auki-theme.css in full and inlines
+       the entire contents into the <style> block below. Do not use a
+       <link> tag — the generated deck must be self-contained.
+
+  FONTS: the skill reads the TTF files from design/core/fonts/ and
+         inlines them as base64 data URIs replacing the relative paths
+         in the @font-face declarations from auki-theme.css.
+
+  LOGOS: same as roundup — read each SVG and inline as base64 data URI.
+    design/core/assets/auki-monogram-white.svg → .logo-dark  .mark
+    design/core/assets/auki-monogram-black.svg → .logo-light .mark
+    design/core/assets/auki-wordmark-white.svg → .logo-dark  .wm
+    design/core/assets/auki-wordmark-black.svg → .logo-light .wm
+
+  REVEAL.JS: vendored at design/slides/vendor/ (pinned to 5.1.0).
+    The skill inlines both files — no CDN, no internet dependency for reveal.js.
+    CSS: design/slides/vendor/reveal.css  → inlined first in <head>
+    JS:  design/slides/vendor/reveal.js   → inlined at end of <body>
+
+  OUTPUT PATH:
+    {project-slug}/{author-slug}/{YYYY-WW}/slides-{audience}.html
+    in the appropriate storage repo (public or internal).
+  ═══════════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- FILL: "{AUTHOR} — {PROJECT} · {DATE RANGE} Slides" -->
+<title>Author — Project · May 2026 Slides</title>
+
+<!-- Theme applied before paint — no flash -->
+<script>
+  (function() {
+    var t = localStorage.getItem('auki-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!--
+  Reveal.js CSS: the skill reads design/slides/vendor/reveal.css and inlines it here.
+  This must come BEFORE the auki-theme styles so the theme overrides take effect.
+-->
+<style>
+  /* INLINE: full contents of design/slides/vendor/reveal.css go here */
+</style>
+
+<!--
+  Auki theme CSS: the skill reads design/slides/auki-theme.css in full
+  and pastes the entire contents here, with font @font-face src URLs
+  replaced by base64 data URIs. No external stylesheet link.
+-->
+<style>
+  /* INLINE: full contents of design/slides/auki-theme.css go here,
+     with @font-face src replaced by base64 data URIs */
+</style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE SHELL — always include verbatim
+     Lives outside .reveal — rendered as fixed chrome above the deck.
+════════════════════════════════════════════════════════════════ -->
+
+<!-- 3px orange gradient rule at the very top of the viewport -->
+<div class="top-rule"></div>
+
+<!-- Fixed bar: logo left, controls right -->
+<div class="deck-chrome">
+  <div class="deck-logo">
+    <!--
+      LOGOS: skill reads each SVG and inlines as base64 data URI.
+      src="data:image/svg+xml;base64,{encoded content}"
+      Files:
+        design/core/assets/auki-monogram-white.svg → .logo-dark  .mark
+        design/core/assets/auki-monogram-black.svg → .logo-light .mark
+        design/core/assets/auki-wordmark-white.svg → .logo-dark  .wm
+        design/core/assets/auki-wordmark-black.svg → .logo-light .wm
+    -->
+    <img class="mark logo-dark"  src="data:image/svg+xml;base64,MONOGRAM_WHITE_B64" alt="">
+    <img class="mark logo-light" src="data:image/svg+xml;base64,MONOGRAM_BLACK_B64" alt="">
+    <img class="wm   logo-dark"  src="data:image/svg+xml;base64,WORDMARK_WHITE_B64" alt="Auki Labs">
+    <img class="wm   logo-light" src="data:image/svg+xml;base64,WORDMARK_BLACK_B64" alt="Auki Labs">
+  </div>
+
+  <div class="deck-controls">
+    <!--
+      AUDIENCE BADGE
+      internal  → class="audience-badge"            text="Internal"
+      community → class="audience-badge community"  text="Community"
+      investor  → class="audience-badge investor"   text="Investor"
+    -->
+    <span class="audience-badge">Internal</span>
+
+    <!-- Gallery button — JS shows it only when slides have data-image attached -->
+    <button class="deck-btn" id="gallery-btn" aria-label="View attached images" style="display:none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="3" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="4.5" cy="6.5" r="1" fill="currentColor"/>
+        <path d="M1.5 10L4.5 7L7 9.5L9.5 7L12.5 10" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Overview (grid) button — calls Reveal.toggleOverview() -->
+    <button class="deck-btn" id="overview-btn" aria-label="Slide grid overview (O)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0"  y="0"  width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="8.5" y="0"  width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="0"  y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </button>
+
+    <!-- Save as PDF — opens ?print-pdf which auto-triggers the print dialog -->
+    <button class="deck-btn" id="pdf-btn" aria-label="Save as PDF">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 1.5v7M4.5 6L7 8.5 9.5 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 10.5v1a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Light / dark mode toggle -->
+    <button class="deck-btn" id="theme-btn" aria-label="Toggle light/dark mode">
+      <!-- Sun icon — shown in light mode -->
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <!-- Moon icon — shown in dark mode (default) -->
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- Gallery overlay — populated by the image-attachment JS below -->
+<div class="gallery-overlay" id="gallery-overlay">
+  <div class="gallery-header">
+    <span class="gallery-title">Attached images</span>
+    <button class="gallery-close" id="gallery-close" aria-label="Close gallery">&times;</button>
+  </div>
+  <div class="gallery-scroll">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</div>
+
+
+<!-- Custom navigation — replaces Reveal's built-in controls.
+     Start with prev disabled (deck opens at slide 1). -->
+<div class="nav-controls">
+  <button class="nav-btn is-disabled" id="nav-prev" aria-label="Previous slide"></button>
+  <button class="nav-btn" id="nav-next" aria-label="Next slide"></button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     REVEAL.JS PRESENTATION
+════════════════════════════════════════════════════════════════ -->
+
+<div class="reveal">
+  <div class="slides">
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 1: TITLE — always first, always present.
+
+         The cover slide. Large heading, optional subtitle, meta footer.
+         Audience badge is in the deck-chrome above, not here.
+
+         TITLE: project or team name only — short, no week numbers.
+           "Spatial SDK", "Park · SDK · Boosterapp", "Cactus".
+           Date info belongs only in .meta-date.
+         SUBTITLE: one sentence — what changed or what the week was about.
+           Omit entirely if nothing meaningful to add.
+         META: author name, date range, 1-3 project tags.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-title">
+      <div></div>
+      <div class="title-bottom">
+        <div class="title-left">
+          <span class="title-top-anchor"></span>
+          <div class="eyebrow">Building the real-world web.</div>
+          <h1 class="title">Project or Team Name</h1>
+          <p class="subtitle">One headline sentence about this deck — what changed, what shipped, or what this week was about.</p>
+        </div>
+        <div class="meta">
+          <span class="meta-author">Author Name</span>
+          <span class="meta-date">12 May 2026 &nbsp;&middot;&nbsp; <span style="color:var(--orange)">Week 20</span></span>
+          <div class="meta-projects">
+            <span class="project-tag">Project A</span>
+            <!-- <span class="project-tag">Project B</span> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 2: SECTION DIVIDER — optional.
+
+         USE: deck is 12+ slides with 3+ distinct topic areas.
+         SKIP: short decks, content flows without clear breaks,
+               fewer than 3 distinct sections.
+         The skill decides. If in doubt, omit it.
+
+         NUMBER FORMAT: zero-padded two digits (01, 02, 03…)
+         SECTION NAME: the topic label, not a sentence.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-section">
+      <!-- FILL: section number — zero-padded (01, 02, 03…) -->
+      <div class="section-num">01</div>
+      <div class="section-name-wrap">
+        <!-- FILL: section topic label -->
+        <h2 class="section-title">What shipped</h2>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 3: STATEMENT — optional.
+
+         The single most important thing in the deck.
+         TL;DR equivalent, major milestone, or a dramatic opening beat.
+         Large statement text, optional supporting context below it.
+
+         USE: when there's one headline insight worth a full slide.
+         SKIP: when the deck's most important thing fits naturally
+               in a content slide heading.
+         PLACEMENT: after title (or after section divider), before
+                    the detailed content. Or as a closing beat.
+
+         STATEMENT TEXT: direct, first-person or declarative.
+           "We shipped X." / "Latency is now Y." / "X is unblocked."
+         CONTEXT: 1-2 sentences with supporting detail or consequence.
+           Optional. Omit if the statement is complete on its own.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-statement">
+      <!-- FILL: the single most important thing — bold and direct -->
+      <p class="statement-text">We cut domain join latency from 420ms to 180ms — 2.3× faster than target.</p>
+      <!-- FILL (optional): supporting context. Omit if not needed. -->
+      <p class="statement-context">The relay protocol rewrite landed this week. All environments are on the new path. No rollback required.</p>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 4: CONTENT (bullets) — standard workhorse slide.
+
+         HEADING: short, specific. Not "Update" — "Relay improvements".
+         BULLETS: discrete, parallel items. Bold name + dash + detail.
+           Max 5 bullets. Split to a second slide if more are needed.
+           Each bullet is one thing. Avoid compound bullets.
+         CALLOUT: optional. One standout insight. Use sparingly.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-content">
+      <h2 class="slide-heading">What shipped</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>Relay protocol v2</strong> — new binary frame format, 40% lower message overhead. Now default in all regions.</li>
+          <li><strong>Domain join fast-path</strong> — skips handshake negotiation for previously-seen devices. Covers 78% of joins.</li>
+          <li><strong>Pose pipeline batching</strong> — batches sensor reads into 16ms windows. Reduces CPU wake-ups by 60%.</li>
+          <li>Nightly test suite stability improved — flakiness rate down from 14% to 3%.</li>
+        </ul>
+        <!--
+          OPTIONAL CALLOUT — remove comment markers to activate.
+          Use when one item deserves visual separation. Max 1 per slide.
+        -->
+        <!--
+        <div class="callout" style="border-left:2px solid var(--orange);background:rgba(253,158,47,0.05);padding:16px 20px;border-radius:0 4px 4px 0;margin-top:24px;">
+          <p style="margin:0;font-size:18px;color:var(--light);opacity:0.9;">The standout insight — the one thing the reader must not miss.</p>
+        </div>
+        -->
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         CONTENT (prose variant) — commented out, for reference.
+
+         USE: when content flows as connected thought, not a list.
+         Max 2 paragraphs. If longer, it belongs in a document.
+    ───────────────────────────────────────────────────────── -->
+    <!--
+    <section class="slide-content">
+      <h2 class="slide-heading">Context or rationale</h2>
+      <div class="slide-body">
+        <p>Prose paragraph for continuous narrative — architectural decision, background context, or a nuanced explanation. Use when bullets would fragment the thought. Keep it short.</p>
+        <p style="margin-top:20px;">Second paragraph if needed. Two short paragraphs are a slide; anything more is a document.</p>
+      </div>
+    </section>
+    -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 5: STATS — metrics and numbers.
+
+         USE: 2-5 real, meaningful numbers worth showing.
+         SKIP: fewer than 2 metrics; numbers need too much explanation.
+         2-3 cards is the sweet spot. 4 is fine. 5 is the maximum.
+
+         UNIT: put the unit suffix in .unit for orange styling.
+         DELTA: .up (lime), .down (red), no class (muted neutral).
+         LABEL: short uppercase — describes the metric, not the change.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-stats">
+      <h2 class="slide-heading">Results this week</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">180<span class="unit">ms</span></div>
+          <div class="stat-delta up">↓ from 420ms</div>
+          <div class="stat-label">Domain join latency</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">94<span class="unit">%</span></div>
+          <div class="stat-delta up">↑ from 71%</div>
+          <div class="stat-label">Pose accuracy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3<span class="unit">×</span></div>
+          <div class="stat-delta up">vs. previous week</div>
+          <div class="stat-label">Relay throughput</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 6: GRAPHIC (bar chart).
+
+         USE: comparing values across categories.
+         Good for: performance benchmarks, usage distribution, before/after.
+
+         HOW TO ADAPT:
+           1. Set viewBox height to fit your bar count (each row ~72px)
+           2. Calculate bar widths: (value / max_value) * max_bar_width
+              max_bar_width is ~580px (165 to 745)
+           3. Primary (orange) bars for the key category / best result
+           4. Secondary (muted) bars for comparison / less-important items
+           5. Sort by value (longest first) unless order has semantic meaning
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-graphic">
+      <h2 class="slide-heading">Latency by operation</h2>
+      <div class="graphic-area">
+        <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:400px;">
+          <defs>
+            <style>
+              .bl { font-family: 'DM Sans', sans-serif; font-size: 14px; fill: rgba(219,237,237,0.6); }
+              .bv { font-family: 'TT Firs Neue', 'Space Grotesk', sans-serif; font-size: 15px; fill: #DBEDED; }
+              .bp { fill: #FD9E2F; opacity: 0.85; }
+              .bs { fill: rgba(219,237,237,0.25); }
+              .ax { stroke: rgba(219,237,237,0.1); stroke-width: 1; }
+            </style>
+          </defs>
+          <line x1="160" y1="20" x2="160" y2="290" class="ax"/>
+          <line x1="160" y1="290" x2="760" y2="290" class="ax"/>
+
+          <text x="150" y="66"  text-anchor="end" class="bl">Domain join (new)</text>
+          <rect x="165" y="44"  width="249" height="36" class="bp" rx="3"/>
+          <text x="422" y="68"  class="bv" dx="8">180ms</text>
+
+          <text x="150" y="138" text-anchor="end" class="bl">Pose update</text>
+          <rect x="165" y="116" width="152" height="36" class="bp" rx="3"/>
+          <text x="325" y="140" class="bv" dx="8">110ms</text>
+
+          <text x="150" y="210" text-anchor="end" class="bl">Domain join (old)</text>
+          <rect x="165" y="188" width="582" height="36" class="bs" rx="3"/>
+          <text x="755" y="212" text-anchor="end" class="bv">420ms</text>
+
+          <text x="150" y="282" text-anchor="end" class="bl">Relay handshake</text>
+          <rect x="165" y="260" width="96"  height="36" class="bs" rx="3"/>
+          <text x="269" y="284" class="bv" dx="8">70ms</text>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         GRAPHIC (trend line) — commented out, for reference.
+
+         USE: metrics over time, progress toward a goal, velocity.
+         TIP: 6-8 data points is the readable range.
+              y = 260 - (value / max * 240) for point placement.
+    ───────────────────────────────────────────────────────── -->
+    <!--
+    <section class="slide-graphic">
+      <h2 class="slide-heading">Latency over 6 weeks</h2>
+      <div class="graphic-area">
+        <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:380px;">
+          <defs>
+            <style>
+              .ax  { stroke: rgba(219,237,237,0.1); stroke-width: 1; }
+              .grd { stroke: rgba(219,237,237,0.05); stroke-width: 1; stroke-dasharray: 4 4; }
+              .tl  { stroke: #FD9E2F; stroke-width: 2.5; fill: none; }
+              .ta  { fill: url(#ag); }
+              .al  { font-family: 'DM Sans', sans-serif; font-size: 13px; fill: rgba(219,237,237,0.5); }
+              .dd  { fill: #FD9E2F; }
+            </style>
+            <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#FD9E2F" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#FD9E2F" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line x1="60" y1="260" x2="780" y2="260" class="ax"/>
+          <line x1="60" y1="20"  x2="60"  y2="260" class="ax"/>
+          <line x1="60" y1="180" x2="780" y2="180" class="grd"/>
+          <line x1="60" y1="100" x2="780" y2="100" class="grd"/>
+          <path d="M 60,215 L 180,200 L 300,190 L 420,165 L 540,130 L 660,95 L 780,65 L 780,260 L 60,260 Z" class="ta"/>
+          <polyline points="60,215 180,200 300,190 420,165 540,130 660,95 780,65" class="tl"/>
+          <circle cx="60"  cy="215" r="5" class="dd"/>
+          <circle cx="180" cy="200" r="5" class="dd"/>
+          <circle cx="300" cy="190" r="5" class="dd"/>
+          <circle cx="420" cy="165" r="5" class="dd"/>
+          <circle cx="540" cy="130" r="5" class="dd"/>
+          <circle cx="660" cy="95"  r="5" class="dd"/>
+          <circle cx="780" cy="65"  r="5" class="dd"/>
+          <text x="60"  y="282" text-anchor="middle" class="al">Wk 14</text>
+          <text x="180" y="282" text-anchor="middle" class="al">Wk 15</text>
+          <text x="300" y="282" text-anchor="middle" class="al">Wk 16</text>
+          <text x="420" y="282" text-anchor="middle" class="al">Wk 17</text>
+          <text x="540" y="282" text-anchor="middle" class="al">Wk 18</text>
+          <text x="660" y="282" text-anchor="middle" class="al">Wk 19</text>
+          <text x="780" y="282" text-anchor="middle" class="al">Wk 20</text>
+        </svg>
+      </div>
+    </section>
+    -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         GRAPHIC (architecture diagram) — commented out, for reference.
+
+         USE: system structure, data flow, component relationships.
+         TIP: highlight the NEW/CHANGED component with .box-highlight.
+              Keep arrows to the essential flow only.
+    ───────────────────────────────────────────────────────── -->
+    <!--
+    <section class="slide-graphic">
+      <h2 class="slide-heading">Updated relay architecture</h2>
+      <div class="graphic-area">
+        <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:420px;">
+          <defs>
+            <style>
+              .bx  { stroke: rgba(219,237,237,0.18); stroke-width: 1; fill: rgba(255,255,255,0.04); }
+              .bxh { stroke: #FD9E2F; stroke-width: 1.5; fill: rgba(253,158,47,0.06); }
+              .ar  { stroke: rgba(219,237,237,0.25); stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+              .bt  { font-family: 'TT Firs Neue', 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 400; fill: #DBEDED; }
+              .bs2 { font-family: 'DM Sans', sans-serif; font-size: 12px; fill: rgba(219,237,237,0.5); }
+            </style>
+            <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="rgba(219,237,237,0.25)"/>
+            </marker>
+          </defs>
+          <rect x="20"  y="140" width="160" height="80" rx="6" class="bx"/>
+          <text x="100" y="175" text-anchor="middle" class="bt">Client SDK</text>
+          <text x="100" y="196" text-anchor="middle" class="bs2">device</text>
+          <rect x="320" y="60"  width="160" height="80" rx="6" class="bxh"/>
+          <text x="400" y="95"  text-anchor="middle" class="bt">Relay v2</text>
+          <text x="400" y="116" text-anchor="middle" class="bs2">new this week</text>
+          <rect x="320" y="220" width="160" height="80" rx="6" class="bx"/>
+          <text x="400" y="255" text-anchor="middle" class="bt">Domain Store</text>
+          <text x="400" y="276" text-anchor="middle" class="bs2">unchanged</text>
+          <rect x="620" y="140" width="160" height="80" rx="6" class="bx"/>
+          <text x="700" y="175" text-anchor="middle" class="bt">Posemesh</text>
+          <text x="700" y="196" text-anchor="middle" class="bs2">service layer</text>
+          <line x1="180" y1="168" x2="318" y2="108" class="ar"/>
+          <line x1="180" y1="192" x2="318" y2="248" class="ar"/>
+          <line x1="480" y1="100" x2="618" y2="162" class="ar"/>
+          <line x1="480" y1="260" x2="618" y2="198" class="ar"/>
+        </svg>
+      </div>
+    </section>
+    -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 7: SPLIT — two-column layout.
+
+         USE: side-by-side comparison, two workstreams, text + visual.
+         GOOD FOR: before/after, two parallel streams, problem/solution.
+         HEADING is shared across both columns.
+         Each column gets its own .eyebrow label.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-split">
+      <h2 class="slide-heading">Before and after</h2>
+      <div class="split-body">
+        <div class="split-left">
+          <!-- FILL: left column eyebrow label -->
+          <div class="eyebrow">Before — Protocol v1</div>
+          <ul>
+            <li>Full handshake on every domain join regardless of device history</li>
+            <li>420ms average latency on fresh join</li>
+            <li>Stateless: no knowledge of previously-seen devices</li>
+            <li>14% CPU overhead from redundant negotiation cycles</li>
+          </ul>
+        </div>
+
+        <!-- Vertical rule between columns — do not remove -->
+        <div class="split-divider"></div>
+
+        <div class="split-right">
+          <!-- FILL: right column eyebrow label -->
+          <div class="eyebrow">After — Protocol v2</div>
+          <ul>
+            <li><strong>Fast-path</strong> for known devices — skips full handshake. Covers 78% of joins.</li>
+            <li>180ms average latency — 2.3× improvement on target path</li>
+            <li>Device session cache persists across relay restarts</li>
+            <li>CPU overhead reduced by 60%</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 8: IMAGE — full-bleed or contained visual.
+
+         Full-bleed: use data-background-image on the <section>.
+         The skill base64-encodes local images for self-contained output.
+
+         FULL-BLEED PATTERN:
+           <section class="slide-image"
+                    data-background-image="data:image/jpeg;base64,..."
+                    data-background-size="cover"
+                    data-background-color="#111111">
+
+         CONTAINED PATTERN: nest inside slide-content (see image.html).
+         CAPTION: optional. One sentence. Floats over the bottom.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-image"
+             data-background-color="#111111"
+             data-background-image=""
+             data-background-size="cover">
+      <!--
+        FILL: set data-background-image to the base64 data URI of the image.
+        If no image: remove this slide or use the contained variant.
+      -->
+      <div class="image-caption">
+        <p>Caption describing what the image shows and why it matters.</p>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 9: CONTENT — what's in progress.
+
+         Standard content slide used for in-progress work.
+         Same rules as shipped — bullets or prose, max 5 bullets.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-content">
+      <h2 class="slide-heading">What's in progress</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>Workstream name</strong> — current state. Where it is in the process. Approximate completion. What's enabling or blocking it.</li>
+          <li><strong>Another workstream</strong> — same pattern. Specific. Avoids "working on" — says what state the work is in.</li>
+          <li>Simpler item without bold lead — use when the item has no distinct name or is a sub-task.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 10: CONTENT — what's next.
+
+         Near-term plans. Usually bullets.
+         Prose is fine when the direction is more nuanced than a list.
+         Internal decks: may include blockers/asks here or as its own slide.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-content">
+      <h2 class="slide-heading">What's next</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>Next priority</strong> — specific and near-term. If it's on the horizon but not imminent, put it last.</li>
+          <li><strong>Another near-term item</strong> — same pattern.</li>
+          <li>Supporting item — lower priority or dependency.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         SLIDE 11 (INTERNAL ONLY): BLOCKERS & ASKS.
+
+         INTERNAL ONLY — omit entirely for community and investor.
+         Each bullet: what you need, from whom, by when, and why.
+         Make asks specific and actionable.
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-content">
+      <h2 class="slide-heading">Blockers &amp; asks</h2>
+      <div class="slide-body">
+        <ul>
+          <li><strong>What you need</strong> — from whom. By when. What unblocks if resolved. Specific enough that the person reading knows exactly what action to take.</li>
+          <li><strong>Second ask</strong> — same pattern. One ask per bullet.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         CLOSING SLIDE — optional.
+
+         Simple, branded. Use for "what's next" sign-off, a thank-you,
+         or a call-to-action. Not a required slide — include only when
+         the deck ends with a clear beat worth a dedicated slide.
+
+         GOOD FOR:
+           - Decks presented live (gives a natural landing point)
+           - Decks with a specific CTA or request
+           - Multi-team digests with a handoff note
+
+         SKIP FOR:
+           - Short update decks that end naturally on "what's next"
+           - Decks that already end on a strong statement slide
+    ───────────────────────────────────────────────────────── -->
+    <section class="slide-closing">
+      <!-- FILL: eyebrow — "Up next" / "Thank you" / "Questions" -->
+      <div class="eyebrow">Up next</div>
+      <!-- FILL: closing heading — what's coming or what you need -->
+      <h2 class="closing-heading">What's coming next.</h2>
+      <!-- FILL (optional): one sentence of supporting text. Omit if not needed. -->
+      <p class="closing-body">Optional supporting text about what follows or what you need from the team.</p>
+    </section>
+
+
+  </div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS — always include verbatim
+════════════════════════════════════════════════════════════════ -->
+
+<!--
+  Reveal.js JS: the skill reads design/slides/vendor/reveal.js and inlines it here.
+  Must appear BEFORE the Reveal.initialize() call below.
+-->
+<script>
+  /* INLINE: full contents of design/slides/vendor/reveal.js go here */
+</script>
+
+<script>
+  // ── PDF image appendix ────────────────────────────────────────
+  // Runs synchronously BEFORE Reveal.initialize() so reveal.js wraps
+  // appendix sections in .pdf-page exactly like regular slides — no
+  // blank leading page from manually-created pdf-page elements.
+  // Only active when ?print-pdf is in the URL.
+  (function() {
+    if (window._appendixRan) return;
+    window._appendixRan = true;
+    if (!/[?&]print-pdf/.test(window.location.search)) return;
+    var slidesEl = document.querySelector('.reveal .slides');
+    if (!slidesEl) return;
+    var allSections = Array.from(slidesEl.querySelectorAll(':scope > section'));
+    allSections.forEach(function(section, idx) {
+      var src     = section.getAttribute('data-image');
+      var caption = section.getAttribute('data-image-caption') || '';
+      if (!src) return;
+      var appendixSection = document.createElement('section');
+      appendixSection.className = 'slide-image-appendix';
+      appendixSection.innerHTML =
+        '<div class="appendix-eyebrow">Slide ' + (idx + 1) +
+        (caption ? ' &nbsp;&middot;&nbsp; ' + caption : '') +
+        '</div>' +
+        '<img class="appendix-img" src="' + src + '" alt="">';
+      slidesEl.appendChild(appendixSection);
+    });
+  })();
+</script>
+
+<script>
+  // ── Reveal.js initialisation ──────────────────────────────────
+  Reveal.initialize({
+    width:                1280,
+    height:               720,
+    margin:               0.04,
+    minScale:             0.2,
+    maxScale:             2.0,
+
+    // Transitions
+    transition:           'slide',      // none/fade/slide/convex/concave/zoom
+    transitionSpeed:      'fast',       // default/fast/slow
+    backgroundTransition: 'fade',
+
+    // Navigation
+    controls:             true,
+    controlsTutorial:     false,
+    controlsLayout:       'bottom-right',
+    controlsBackArrows:   'faded',
+    progress:             true,
+    slideNumber:          'c/t',
+    showSlideNumber:      'all',
+    hash:                 true,
+    history:              false,
+    keyboard:             true,
+    overview:             true,
+    center:               false,        // we handle our own vertical centering via flex
+
+    // Behaviour
+    touch:                true,
+    loop:                 false,
+    rtl:                  false,
+    shuffle:              false,
+    fragments:            true,
+    fragmentInURL:        true,
+    embedded:             false,
+    help:                 true,
+    pauseKey:             'b',
+    showNotes:            false,
+    autoSlide:            0,
+    autoSlideStoppable:   true,
+    mouseWheel:           false,
+    previewLinks:         false,
+    postMessage:          true,
+    postMessageEvents:    false,
+    focusBodyOnPageVisibilityChange: true,
+  });
+</script>
+
+<script>
+  // ── Overview (grid) button ───────────────────────────────────
+  document.getElementById('overview-btn').addEventListener('click', function() {
+    Reveal.toggleOverview();
+  });
+
+  // ── Save as PDF ──────────────────────────────────────────────
+  // Opens this deck with ?print-pdf, which triggers the auto-print
+  // overlay and Chrome's print dialog. User selects Save as PDF.
+  document.getElementById('pdf-btn').addEventListener('click', function() {
+    window.open(window.location.pathname + '?print-pdf', '_blank');
+  });
+</script>
+
+<script>
+  // ── Theme toggle ──────────────────────────────────────────────
+  // Reads/writes 'auki-theme' in localStorage.
+  // Toggles data-theme="light"/"dark" on <html>.
+  // Swaps logo variants and sun/moon icons.
+  (function() {
+    var html   = document.documentElement;
+    var btn    = document.getElementById('theme-btn');
+    var sun    = btn.querySelector('.icon-sun');
+    var moon   = btn.querySelector('.icon-moon');
+    var darks  = document.querySelectorAll('.logo-dark');
+    var lights = document.querySelectorAll('.logo-light');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('auki-theme', theme);
+      var isLight = theme === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none'  : 'block';
+      darks.forEach(function(el)  { el.style.display = isLight ? 'none'  : 'block'; });
+      lights.forEach(function(el) { el.style.display = isLight ? 'block' : 'none';  });
+    }
+
+    // Apply on load (localStorage value already set by inline script in <head>)
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+<script>
+  // ── Auto-fit: prevent content from overflowing slides ────────
+  // Runs after reveal.js renders. For each slide, if its natural
+  // scrollHeight exceeds the fixed slide height (720px), reduces
+  // font-size on the content region progressively until it fits.
+  // Title slides shrink the title itself; all other slides shrink
+  // their content container.
+  (function() {
+    var SLIDE_H = 720;
+
+    function fitTitle(slide) {
+      var title = slide.querySelector('.title');
+      if (!title) return;
+      title.style.fontSize = '';
+      var size = parseInt(window.getComputedStyle(title).fontSize, 10) || 72;
+      var min  = 36;
+      while (slide.scrollHeight > SLIDE_H && size > min) {
+        size -= 3;
+        title.style.fontSize = size + 'px';
+        title.style.lineHeight = size < 60 ? '1.05' : '0.92';
+      }
+    }
+
+    function fitContent(slide) {
+      if (slide.scrollHeight <= SLIDE_H) return;
+      var container = slide.querySelector('.slide-body')
+                   || slide.querySelector('.stats-grid')
+                   || slide.querySelector('.compare-grid')
+                   || slide.querySelector('.statement-wrap');
+      if (!container) return;
+      container.style.fontSize = '';
+      var size = parseInt(window.getComputedStyle(container).fontSize, 10) || 17;
+      var min  = 11;
+      while (slide.scrollHeight > SLIDE_H && size > min) {
+        size = Math.max(size - 1, min);
+        container.style.fontSize = size + 'px';
+      }
+    }
+
+    function fitSteps(slide) {
+      if (slide.scrollHeight <= SLIDE_H) return;
+      var steps = Array.from(slide.querySelectorAll('.step'));
+      if (!steps.length) return;
+      // Start from CSS defaults; shrink proportionally until everything fits.
+      var titleSize = 19, descSize = 15, numSize = 32, pad = 18;
+      while (slide.scrollHeight > SLIDE_H && titleSize > 12) {
+        titleSize = Math.max(titleSize - 1, 12);
+        descSize  = Math.max(descSize  - 1, 10);
+        numSize   = Math.max(numSize   - 1, 18);
+        pad       = Math.max(pad       - 1,  8);
+        steps.forEach(function(s) {
+          s.style.paddingTop    = pad + 'px';
+          s.style.paddingBottom = pad + 'px';
+          var t = s.querySelector('.step-title');
+          var d = s.querySelector('.step-desc');
+          var n = s.querySelector('.step-num');
+          if (t) t.style.fontSize = titleSize + 'px';
+          if (d) d.style.fontSize = descSize  + 'px';
+          if (n) n.style.fontSize = numSize   + 'px';
+        });
+      }
+    }
+
+    function fitAll() {
+      document.querySelectorAll('.reveal .slides section').forEach(function(slide) {
+        if (slide.classList.contains('slide-section')) return; // dividers intentionally bleed
+        if (slide.classList.contains('slide-title')) { fitTitle(slide); return; }
+        if (slide.classList.contains('slide-steps'))  { fitSteps(slide);   return; }
+        fitContent(slide);
+      });
+    }
+
+    Reveal.on('ready',  fitAll);
+    Reveal.on('resize', fitAll);
+  })();
+</script>
+
+<script>
+  // ── Magnify loupe: hover over figure.magnify-area shows a 2.4× circular loupe ──
+  // Zero per-slide wiring — just wrap an img in <figure class="magnify-area">.
+  // Re-initialises on slidechanged/resize because Reveal hides non-current
+  // slides with display:none, making clientWidth 0 until the slide is active.
+  (function setupMagnifiers() {
+    var ZOOM = 2.4, DIAM = 160;
+    function init() {
+      document.querySelectorAll('figure.magnify-area').forEach(function(fig) {
+        if (fig._magnifyReady) return;
+        fig._magnifyReady = true;
+        var img   = fig.querySelector('img');
+        var loupe = fig.querySelector('.loupe');
+        if (!img || !loupe) return;
+        loupe.style.cssText = [
+          'position:absolute;width:'+DIAM+'px;height:'+DIAM+'px',
+          'border-radius:50%;overflow:hidden',
+          'border:2px solid rgba(255,255,255,0.25)',
+          'box-shadow:0 4px 24px rgba(0,0,0,0.5)',
+          'pointer-events:none;opacity:0;transition:opacity .15s'
+        ].join(';');
+        var zi = document.createElement('img');
+        zi.src = img.src;
+        zi.style.cssText = 'position:absolute;transform-origin:top left;pointer-events:none;';
+        loupe.appendChild(zi);
+        fig.addEventListener('mousemove', function(e) {
+          var r  = img.getBoundingClientRect();
+          var x  = e.clientX - r.left, y = e.clientY - r.top;
+          if (x < 0 || y < 0 || x > r.width || y > r.height) { loupe.style.opacity = 0; return; }
+          loupe.style.opacity = 1;
+          loupe.style.left = (x - DIAM/2) + 'px';
+          loupe.style.top  = (y - DIAM/2) + 'px';
+          var sx = img.naturalWidth / r.width, sy = img.naturalHeight / r.height;
+          zi.style.width  = (img.naturalWidth  * ZOOM / sx) + 'px';
+          zi.style.height = (img.naturalHeight * ZOOM / sy) + 'px';
+          zi.style.left   = (-x * ZOOM + DIAM/2) + 'px';
+          zi.style.top    = (-y * ZOOM + DIAM/2) + 'px';
+        });
+        fig.addEventListener('mouseleave', function() { loupe.style.opacity = 0; });
+      });
+    }
+    ['ready','slidechanged','resize','slidetransitionend'].forEach(function(ev) { Reveal.on(ev, init); });
+  })();
+</script>
+
+<script>
+  // ── Lightbox: click figure.expandable opens a fullscreen overlay ──
+  // ESC handled in capture phase to pre-empt Reveal's overview toggle.
+  // Zero per-slide wiring — just add class="expandable" to a figure.
+  // Also exposes window._openLightbox(src) so the image-attachment
+  // system (data-image / slide-img-btn / gallery overlay) can reuse
+  // the same overlay element without duplicating the IIFE.
+  (function setupLightbox() {
+    var ov  = document.createElement('div');
+    var oim = document.createElement('img');
+    var cls = document.createElement('button');
+    ov.style.cssText  = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;cursor:zoom-out;';
+    oim.style.cssText = 'max-width:92vw;max-height:92vh;object-fit:contain;border-radius:4px;box-shadow:0 8px 48px rgba(0,0,0,0.6);';
+    cls.style.cssText = 'position:fixed;top:20px;right:24px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;opacity:.7;line-height:1;padding:8px;';
+    cls.innerHTML = '&times;'; cls.setAttribute('aria-label','Close lightbox');
+    ov.appendChild(oim); ov.appendChild(cls); document.body.appendChild(ov);
+    function open(src) { oim.src = src; ov.style.display = 'flex'; document.addEventListener('keydown', onKey, true); }
+    function close()   { ov.style.display = 'none'; document.removeEventListener('keydown', onKey, true); }
+    function onKey(e)  { if (e.key === 'Escape') { e.stopPropagation(); close(); } }
+    ov.addEventListener('click', function(e) { if (e.target !== cls) close(); });
+    cls.addEventListener('click', close);
+    window._openLightbox = open;
+    function init() {
+      document.querySelectorAll('figure.expandable').forEach(function(fig) {
+        if (fig._lbReady) return;
+        fig._lbReady = true;
+        var img = fig.querySelector('img');
+        if (!img) return;
+        img.style.cursor = 'zoom-in';
+        var hint = fig.querySelector('.expand-hint');
+        img.addEventListener('click', function(e) { e.stopPropagation(); open(img.src); });
+        if (hint) hint.addEventListener('click', function(e) { e.stopPropagation(); open(img.src); });
+      });
+    }
+    Reveal.on('ready', init); Reveal.on('slidechanged', init);
+  })();
+</script>
+
+<script>
+  // ── Slide image attachments ───────────────────────────────────
+  // Slides with data-image="data:..." get a .slide-img-btn injected
+  // automatically. The gallery button in the chrome is shown only
+  // when at least one slide has an image attached. Clicking either
+  // opens the shared lightbox (window._openLightbox, defined above).
+  //
+  // The skill attaches images by adding data-image and data-image-caption
+  // attributes to section elements in the generated HTML. No per-slide
+  // wiring required beyond setting those attributes.
+  (function() {
+    Reveal.on('ready', function() {
+      var allSlides = Array.from(document.querySelectorAll('.reveal .slides section'));
+      var imageSlides = [];
+
+      allSlides.forEach(function(slide, idx) {
+        var src     = slide.getAttribute('data-image');
+        var caption = slide.getAttribute('data-image-caption') || '';
+        if (!src) return;
+
+        imageSlides.push({ src: src, caption: caption, slideNum: idx + 1 });
+
+        var btn = document.createElement('button');
+        btn.className = 'slide-img-btn';
+        btn.setAttribute('aria-label', 'View attached image');
+        btn.innerHTML =
+          '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect x="1" y="2.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>' +
+            '<circle cx="4.5" cy="6" r="1" fill="currentColor"/>' +
+            '<path d="M1.5 9.5L4.5 6.5L7 9L9.5 6.5L12.5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>' +
+          '</svg>' +
+          '<span>Image</span>';
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          window._openLightbox(src);
+        });
+        slide.appendChild(btn);
+      });
+
+      if (!imageSlides.length) return;
+
+      document.getElementById('gallery-btn').style.display = 'flex';
+
+      var grid = document.getElementById('gallery-grid');
+      imageSlides.forEach(function(item) {
+        var el = document.createElement('div');
+        el.className = 'gallery-item';
+        el.innerHTML =
+          '<img src="' + item.src + '" alt="' + (item.caption || 'Attached image') + '" loading="lazy">' +
+          '<div class="gallery-item-meta">' +
+            '<div class="gallery-item-slide">Slide ' + item.slideNum + '</div>' +
+            (item.caption ? '<div class="gallery-item-caption">' + item.caption + '</div>' : '') +
+          '</div>';
+        el.addEventListener('click', function() { window._openLightbox(item.src); });
+        grid.appendChild(el);
+      });
+    });
+
+    document.getElementById('gallery-btn').addEventListener('click', function() {
+      document.getElementById('gallery-overlay').classList.add('open');
+    });
+    document.getElementById('gallery-close').addEventListener('click', function() {
+      document.getElementById('gallery-overlay').classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') document.getElementById('gallery-overlay').classList.remove('open');
+    });
+  })();
+</script>
+
+<script>
+  // ── Auto-print for PDF export ─────────────────────────────────
+  // When the deck is opened with ?print-pdf in the URL (via the
+  // "Export PDF" button in the Pulse viewer), show a full-screen
+  // overlay so the user never sees the print-mode layout, then
+  // trigger window.print() once Reveal has rendered. After the
+  // print dialog closes the tab cleans itself up.
+  (function() {
+    if (!/[?&]print-pdf/.test(window.location.search)) return;
+
+    var style = document.createElement('style');
+    style.textContent = '@media print { ._pdf-overlay { display: none !important; } }';
+    document.head.appendChild(style);
+
+    var overlay = document.createElement('div');
+    overlay.className = '_pdf-overlay';
+    overlay.style.cssText = [
+      'position:fixed;inset:0;z-index:99999',
+      'background:#0f0f0f',
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px',
+      'font-family:system-ui,sans-serif'
+    ].join(';');
+    overlay.innerHTML =
+      '<div style="width:36px;height:3px;background:#FD9E2F;border-radius:2px"></div>' +
+      '<p style="color:rgba(219,237,237,0.55);font-size:13px;letter-spacing:0.06em;margin:0">Preparing PDF…</p>';
+    document.body.appendChild(overlay);
+
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.print();
+        window.addEventListener('afterprint', function() { window.close(); });
+      }, 600);
+    });
+  })();
+</script>
+
+
+<script>
+  // ── Custom navigation buttons ─────────────────────────────
+  // Injected outside .reveal so Reveal's JS cannot reflow them.
+  (function() {
+    var prev = document.getElementById('nav-prev');
+    var next = document.getElementById('nav-next');
+
+    function update() {
+      var idx   = Reveal.getIndices();
+      var total = document.querySelectorAll('.reveal .slides > section').length;
+      prev.classList.toggle('is-disabled', idx.h === 0);
+      next.classList.toggle('is-disabled', idx.h >= total - 1);
+    }
+
+    prev.addEventListener('click', function() { Reveal.prev(); });
+    next.addEventListener('click', function() { Reveal.next(); });
+
+    Reveal.on('ready',        update);
+    Reveal.on('slidechanged', update);
+  })();
+</script>
+
+</body>
+</html>

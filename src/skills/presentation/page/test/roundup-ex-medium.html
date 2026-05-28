@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel — Cactus Mobile · Week 20</title>
+<script>(function(){var t=localStorage.getItem('auki-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg" alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg" alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Cactus Mobile</h1>
+      <p class="doc-subtitle">Task card redesign shipped and is already reducing missed assignments in pilot stores. AR overlay rendering got a meaningful performance lift.</p>
+    </div>
+    <div class="opening-right">
+      <span class="meta-author">Daniel</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; <span class="meta-week">Week 20</span></span>
+      <div class="meta-projects">
+        <span class="project-tag">Cactus</span>
+        <span class="project-tag">Mobile</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>Good week. The task card redesign went to production and early signals from the pilot stores are better than expected — missed assignment rate is down measurably in the first two days. The AR overlay rendering refactor is done and frame rates on lower-end devices are now acceptable. Still working on the offline sync edge cases; that's the main thing left before we can expand the pilot.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">38<span class="unit">fps</span></div>
+          <div class="metric-delta up">↑ from 21fps</div>
+          <div class="metric-label">AR overlay (low-end devices)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">12<span class="unit">%</span></div>
+          <div class="metric-delta up">↓ missed assignments</div>
+          <div class="metric-label">Pilot stores, first 48h</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Task card redesign</strong> — shipped to all pilot locations. New layout surfaces priority and deadline more clearly. The 12% drop in missed assignments in the first 48 hours is encouraging, though it's too early to call it confirmed.</li>
+        <li><strong>AR overlay rendering refactor</strong> — rewrote the render pipeline to batch draw calls. Frame rate on our lowest-spec test device (2019 Samsung A50) went from 21fps to 38fps. Overlay is now usable on devices we previously considered borderline.</li>
+        <li><strong>Push notification reliability</strong> — fixed a race condition that caused task notifications to arrive after the task window had already closed. Affected around 8% of notifications in high-concurrency stores.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The task card redesign took three iterations and two rounds of pilot feedback to get right. The version that shipped is meaningfully simpler than what we started with — the first prototype had seven data points per card; the final has three. That reduction is almost certainly what's driving the missed assignment improvement.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+
+      <h3>Offline sync edge cases</h3>
+      <p>The main remaining work before pilot expansion. The sync logic handles the happy path well but has three known failure modes when a device comes back online after an extended offline period: duplicate task completion events, stale assignment state, and a rare deadlock in the queue processor. All three are reproduced reliably in tests. Fixes for the first two are done; the deadlock is more complex and is the current focus.</p>
+
+      <h3>Store manager dashboard</h3>
+      <p>Early implementation of the compliance overview screen that store managers see. The task assignment pipeline is solid enough that we can now surface meaningful aggregate data without it being noisy. Targeting a first internal review next week — not shipping until the offline sync work is done, but building in parallel so they land together.</p>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li><strong>Test device access</strong> — need three more low-spec Android devices for the rendering regression suite. The current set covers our target range but not the long tail of devices in the pilot stores. Tracy mentioned there might be spares from a previous pilot — can someone check?</li>
+        <li><strong>Pilot store data access</strong> — to validate the missed assignment metric beyond the first 48 hours, need read access to the pilot store analytics pipeline. Shuning said this is being set up but I don't have credentials yet.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Resolve the offline sync deadlock — this is the critical path for pilot expansion</li>
+        <li>First internal review of the store manager dashboard</li>
+        <li>Extend the rendering regression suite once additional devices are sourced</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html=document.documentElement,btn=document.getElementById('theme-toggle'),sun=btn.querySelector('.icon-sun'),moon=btn.querySelector('.icon-moon'),dark=document.querySelectorAll('.logo-dark'),light=document.querySelectorAll('.logo-light');
+    function applyTheme(t){html.setAttribute('data-theme',t);localStorage.setItem('auki-theme',t);var l=t==='light';sun.style.display=l?'block':'none';moon.style.display=l?'none':'block';dark.forEach(function(e){e.style.display=l?'none':'block';});light.forEach(function(e){e.style.display=l?'block':'none';});}
+    applyTheme(html.getAttribute('data-theme')||'dark');
+    btn.addEventListener('click',function(){applyTheme(html.getAttribute('data-theme')==='light'?'dark':'light');});
+  })();
+</script>
+</body>
+</html>

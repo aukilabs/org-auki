@@ -1,0 +1,2090 @@
+/* ============================================================
+   Auki Labs — Reveal.js Theme
+   design/slides/auki-theme.css
+
+   HOW THIS FILE IS USED:
+   The skill reads this file and inlines the full contents into
+   the generated HTML <style> block. Font @font-face declarations
+   use relative paths here; at generation time the skill replaces
+   those with base64 data URIs so the deck is fully self-contained.
+
+   Google Fonts (DM Sans) is loaded from CDN — requires internet.
+   Reveal.js CSS + JS are vendored in design/slides/vendor/ and
+   inlined by the skill — no CDN dependency for reveal.js.
+   ============================================================ */
+
+
+/* ── Webfonts ─────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap");
+
+
+/* ── Design tokens ────────────────────────────────────────── */
+
+:root {
+  --dark:         #111111;
+  --light:        #DBEDED;
+  --surface:      #161616;
+  --orange:       #FD9E2F;
+  --lime:         #CFFFB0;
+  --muted:        rgba(219, 237, 237, 0.45);
+  --rule:         rgba(219, 237, 237, 0.08);
+  --rule-strong:  rgba(219, 237, 237, 0.16);
+  --display:      "Space Grotesk", system-ui, sans-serif;  /* TT Firs Neue (licensed) removed for public sync */
+  --body:         "DM Sans", system-ui, sans-serif;
+  /* SVG chart colour tokens — used inside inline <defs><style> blocks */
+  --chart-label:     rgba(219, 237, 237, 0.5);
+  --chart-value:     #DBEDED;
+  --chart-axis:      rgba(219, 237, 237, 0.1);
+  --chart-grid:      rgba(219, 237, 237, 0.06);
+  --chart-secondary: rgba(219, 237, 237, 0.18);
+  --chart-y-label:   rgba(219, 237, 237, 0.35);
+  --chart-box:       rgba(255, 255, 255, 0.03);
+  --chart-box-border: rgba(219, 237, 237, 0.14);
+  --chart-arrow:     rgba(219, 237, 237, 0.22);
+  --chart-box-title: #DBEDED;
+  --chart-box-sub:   rgba(219, 237, 237, 0.45);
+  --chart-ring-track: rgba(219, 237, 237, 0.1);
+  --chart-legend-label: rgba(219, 237, 237, 0.55);
+  --chart-legend-rule:  rgba(219, 237, 237, 0.08);
+}
+
+
+/* ── Reveal.js viewport & base ───────────────────────────── */
+
+.reveal-viewport {
+  background: var(--dark);
+}
+
+.reveal {
+  font-family: var(--body);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.reveal .slides section {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 68px 72px 36px;
+  height: 720px;
+  box-sizing: border-box;
+  overflow: hidden;
+  top: 0 !important;
+  /* Reveal.js sets top via JS; override for flex layout */
+}
+
+/* Slide content should not overflow */
+.reveal .slides section,
+.reveal .slides section > * {
+  outline: none;
+}
+
+
+/* ── Typography ───────────────────────────────────────────── */
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--light);
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.reveal h1 { font-size: 72px; }
+.reveal h2 { font-size: 52px; }
+.reveal h3 { font-size: 32px; }
+.reveal h4 { font-size: 22px; }
+
+.reveal p {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+  color: var(--light);
+}
+
+.reveal p:last-child { margin-bottom: 0; }
+
+/* Fix reveal.js default: ul { display: inline-block } breaks full-width lists */
+.reveal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block !important;
+  width: 100%;
+}
+
+.reveal li {
+  position: relative;
+  padding: 10px 0 10px 28px;
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--light);
+}
+
+.reveal li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.reveal strong {
+  font-weight: 500;
+  color: var(--light);
+}
+
+.reveal em {
+  font-style: italic;
+  color: var(--light);
+}
+
+.reveal a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  color: var(--lime);
+}
+
+.reveal blockquote {
+  border-left: 2px solid var(--orange);
+  padding: 12px 20px;
+  background: rgba(253, 158, 47, 0.05);
+  border-radius: 0 4px 4px 0;
+  margin: 0;
+  font-style: normal;
+}
+
+.reveal blockquote p {
+  font-size: 20px;
+  color: var(--light);
+  opacity: 0.9;
+}
+
+.reveal code {
+  font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.85em;
+  background: rgba(219, 237, 237, 0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--lime);
+}
+
+.reveal pre {
+  font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 6px;
+  padding: 20px 24px;
+  line-height: 1.6;
+  overflow: hidden;
+  box-shadow: none;
+  margin: 0;
+}
+
+.reveal pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--light);
+  font-size: inherit;
+}
+
+.reveal table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--body);
+  font-size: 18px;
+}
+
+.reveal table th {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 10px 16px 10px 0;
+  text-align: left;
+}
+
+.reveal table td {
+  padding: 12px 16px 12px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--light);
+}
+
+.reveal table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ── Utility classes ──────────────────────────────────────── */
+
+.reveal .eyebrow {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.reveal .accent   { color: var(--orange); }
+.reveal .muted    { color: var(--muted); }
+.reveal .lime     { color: var(--lime); }
+.reveal .highlight { color: var(--orange); }
+
+.reveal .eyebrow.is-issue { color: #e07070; }
+
+/* Inline status dot — .dot.green / .dot.amber / .dot.red */
+.reveal .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.reveal .dot.green  { background: var(--lime); }
+.reveal .dot.amber  { background: var(--orange); }
+.reveal .dot.red    { background: #e07070; }
+
+/* Inline pill tag — .pill */
+.reveal .pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  color: var(--muted);
+}
+
+/* Severity badges — .sev.crit / .sev.high / .sev.med / .sev.low */
+.reveal .sev {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.reveal .sev.crit { background: rgba(224,112,112,0.15); color: #e07070; border: 1px solid rgba(224,112,112,0.3); }
+.reveal .sev.high { background: rgba(253,158,47,0.12); color: var(--orange); border: 1px solid rgba(253,158,47,0.3); }
+.reveal .sev.med  { background: rgba(207,255,176,0.08); color: var(--lime); border: 1px solid rgba(207,255,176,0.2); }
+.reveal .sev.low  { background: rgba(219,237,237,0.05); color: var(--muted); border: 1px solid var(--rule-strong); }
+
+.reveal .hairline {
+  display: block;
+  height: 1px;
+  background: var(--rule);
+  border: none;
+  margin: 0;
+}
+
+/* Callout block — inline utility, referenced in content slides */
+.reveal .callout {
+  border-left: 3px solid var(--orange);
+  background: rgba(253, 158, 47, 0.07);
+  padding: 16px 24px;
+  border-radius: 0 6px 6px 0;
+  margin-top: 24px;
+}
+
+.reveal .callout p {
+  margin: 0;
+  font-size: 18px;
+  color: var(--light);
+  opacity: 0.9;
+}
+
+/* Dense prose text — for content-heavy slides */
+.reveal .prose {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--light);
+  margin: 0 0 20px;
+}
+
+.reveal .prose:last-child { margin-bottom: 0; }
+
+/* Slide caption — for graphics, diagrams, split slides */
+.slide-caption {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hairline rule — manual use within slides */
+.slide-rule {
+  height: 1px;
+  background: var(--rule);
+  border: none;
+  margin: 20px 0;
+}
+
+/* Per-slide footer — grounds the slide, shows author + date context */
+.slide-foot {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+
+/* ── Reveal.js UI controls — hidden, replaced by .nav-controls ── */
+/* We inject our own stable buttons outside .reveal so Reveal's JS
+   cannot reflow or reposition them. */
+.reveal .controls { display: none !important; }
+
+
+/* ── Custom navigation controls ──────────────────────────── */
+
+.nav-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  z-index: 1000;
+}
+
+.nav-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 17, 17, 0.55);
+  border: 1px solid var(--rule-strong);
+  border-radius: 6px;
+  color: rgba(219, 237, 237, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 160ms, background 160ms, border-color 160ms, opacity 160ms;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nav-btn:hover {
+  color: var(--orange);
+  background: rgba(253, 158, 47, 0.1);
+  border-color: rgba(253, 158, 47, 0.3);
+}
+
+.nav-btn.is-disabled {
+  opacity: 0.2;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* CSS chevron arrows */
+.nav-btn::after {
+  content: '';
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-style: solid;
+  border-color: currentColor;
+  flex-shrink: 0;
+}
+
+#nav-prev::after {
+  border-width: 0 0 1.5px 1.5px;
+  transform: rotate(45deg) translate(1px, -1px);
+}
+
+#nav-next::after {
+  border-width: 1.5px 1.5px 0 0;
+  transform: rotate(45deg) translate(-1px, 1px);
+}
+
+[data-theme="light"] .nav-btn {
+  background: rgba(232, 232, 229, 0.75);
+  border-color: rgba(0, 0, 0, 0.14);
+  color: rgba(17, 17, 17, 0.45);
+}
+
+/* Progress bar */
+.reveal .progress {
+  height: 3px;
+  background: rgba(219, 237, 237, 0.06);
+  bottom: 0;
+}
+
+.reveal .progress span {
+  background: var(--orange);
+  transition: width 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Slide number */
+.reveal .slide-number {
+  font-family: var(--body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: none;
+  bottom: 23px;
+  right: 96px; /* clears 66px nav-controls + 20px right + 10px gap */
+  padding: 0;
+  opacity: 0.5;
+}
+
+/* Suppress default focus outline on slides */
+.reveal .slides section:focus {
+  outline: none;
+}
+
+
+/* ── Overview mode ────────────────────────────────────────── */
+
+.reveal.overview .slides section {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: border-color 160ms, opacity 160ms;
+}
+
+.reveal.overview .slides section:hover,
+.reveal.overview .slides section.present {
+  border-color: var(--orange);
+  opacity: 1;
+}
+
+
+/* ── Deck chrome ──────────────────────────────────────────── */
+/*
+  Fixed bar above the presentation.
+  Sits outside .reveal — rendered in the page shell.
+*/
+
+.top-rule {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FD9E2F 0%, #FFBE70 40%, #FD9E2F 70%, #D4710A 100%);
+  z-index: 1100;
+}
+
+.deck-chrome {
+  position: fixed;
+  top: 3px; /* sits below the top-rule */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  pointer-events: none;
+  background: rgba(17, 17, 17, 0.68);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(219, 237, 237, 0.08);
+}
+
+.deck-chrome > * {
+  pointer-events: auto;
+}
+
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Audience badge */
+.audience-badge {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 3px;
+  border: 1px solid var(--rule-strong);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Community badge — orange tint */
+.audience-badge.community {
+  border-color: rgba(253, 158, 47, 0.35);
+  color: rgba(253, 158, 47, 0.8);
+  background: rgba(253, 158, 47, 0.06);
+}
+
+/* Investor badge — lime tint */
+.audience-badge.investor {
+  border-color: rgba(207, 255, 176, 0.35);
+  color: rgba(207, 255, 176, 0.8);
+  background: rgba(207, 255, 176, 0.06);
+}
+
+/* Client badge — mist/teal tint */
+.audience-badge.client {
+  border-color: rgba(219, 237, 237, 0.3);
+  color: rgba(219, 237, 237, 0.7);
+  background: rgba(219, 237, 237, 0.05);
+}
+
+/* Chrome buttons (theme toggle, overview, gallery) */
+.deck-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  color: var(--muted);
+  cursor: pointer;
+  height: 26px;
+  padding: 0 7px;
+  transition: border-color 160ms, color 160ms;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.deck-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.deck-btn svg {
+  display: block;
+}
+
+/* Icon visibility — JS toggles these */
+.icon-sun  { display: none; }
+.icon-moon { display: block; }
+
+/* Logo visibility — JS toggles these */
+.logo-dark  { display: block; }
+.logo-light { display: none; }
+
+
+/* ── Slide heading treatment ──────────────────────────────── */
+/*
+  Replaces the old border-bottom heading. The eyebrow label grounds
+  the slide and makes the heading feel intentional.
+*/
+
+.slide-heading-wrap {
+  margin-bottom: 24px;
+}
+
+.slide-heading-label {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+.slide-content .slide-heading,
+.slide-stats   .slide-heading,
+.slide-graphic .slide-heading,
+.slide-split   .slide-heading,
+.slide-compare .slide-heading {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 42px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--light);
+  margin: 0 0 24px;
+  padding: 0;
+  border: none;
+}
+
+/* When heading is inside a wrap the wrap handles bottom spacing — reset the heading margin */
+.slide-heading-wrap .slide-heading {
+  margin-bottom: 0;
+}
+
+/* Optional context line beneath heading — part of the title block, not content.
+   Uses .reveal p.slide-desc to beat the .reveal p specificity (0,1,1). */
+.reveal p.slide-desc {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(219, 237, 237, 0.44);
+  margin-top: -20px;
+  margin-bottom: 24px;
+}
+
+/* When inside .slide-heading-wrap (label + h2 pattern), the h2 margin-bottom is
+   reset to 0 by the wrap rule above. The -20px top then causes overlap — reset it. */
+.slide-heading-wrap p.slide-desc {
+  margin-top: 4px;
+}
+
+
+/* ── Slide type: Title (.slide-title) ─────────────────────── */
+/*
+  The title / cover slide. Content anchored to the bottom of the slide.
+  title-bottom is positioned absolutely so it sits at the foot regardless
+  of Reveal.js overriding display on the section element.
+  The spacer <div></div> in the HTML is kept for graceful degradation
+  but layout does not depend on it.
+*/
+
+.reveal .slides section.slide-title {
+  position: relative;
+  padding: 0;
+  background: radial-gradient(ellipse 380px 320px at 64% 15%, rgba(253,158,47,0.09) 0%, transparent 100%);
+}
+
+.slide-title .title-top-anchor {
+  width: 56px;
+  height: 3px;
+  background: var(--orange);
+  margin-bottom: 32px;
+  display: block;
+}
+
+.slide-title .title-bottom {
+  position: absolute;
+  bottom: 48px;
+  left: 72px;
+  right: 72px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: end;
+}
+
+.slide-title .eyebrow {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.slide-title .title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 84px;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--light);
+  margin: 0 0 20px;
+}
+
+.slide-title .subtitle {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0;
+}
+
+.slide-title .meta,
+.slide-closing .meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.slide-title .meta-author,
+.slide-closing .meta-author {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--light);
+}
+
+.slide-title .meta-date,
+.slide-closing .meta-date {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.slide-title .meta-projects,
+.slide-closing .meta-projects {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  justify-content: flex-end;
+}
+
+.project-tag {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* ── Slide type: Section divider (.slide-section) ─────────── */
+/*
+  Large ghost number + section title.
+  The number bleeds large — it's the brand's most distinctive device.
+*/
+
+.reveal .slides section.slide-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 80px;
+  overflow: hidden;
+}
+
+.slide-section .section-num {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 240px;
+  color: var(--orange);
+  opacity: 0.12;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: -16px;
+  user-select: none;
+}
+
+.slide-section .section-name-wrap {
+  flex: 1;
+  padding-left: 48px;
+}
+
+.slide-section .section-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 64px;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--light);
+  margin: 0;
+}
+
+
+/* ── Slide type: Statement (.slide-statement) ─────────────── */
+/*
+  A single big statement. The left orange border anchors the text block.
+*/
+
+.reveal .slides section.slide-statement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  padding: 68px 72px;
+}
+
+.slide-statement .statement-wrap {
+  border-left: 3px solid var(--orange);
+  padding-left: 32px;
+  margin-bottom: 40px;
+}
+
+.slide-statement .statement-text {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--light);
+  max-width: 1020px;
+  margin: 0;
+}
+
+.slide-statement .statement-context {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0;
+}
+
+
+/* ── Slide type: Content (.slide-content) ─────────────────── */
+/*
+  Standard heading + content slide. Used for bullets and prose.
+*/
+
+.reveal .slides section.slide-content {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.slide-content .slide-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Nested sub-bullets */
+.slide-content .slide-body li li {
+  font-size: 19px;
+  opacity: 0.8;
+  padding-left: 20px;
+}
+
+.slide-content .slide-body li li::before {
+  width: 4px;
+  height: 4px;
+  top: 18px;
+  opacity: 0.5;
+}
+
+
+/* ── Slide type: Stats (.slide-stats) ─────────────────────── */
+/*
+  2–5 big metrics. Bordered cards — mirrors the roundup metric style.
+  Numbers large, units orange, optional delta, uppercase label with hairline.
+*/
+
+.reveal .slides section.slide-stats {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.slide-stats .stats-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 0;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 28px;
+  border: 1px solid rgba(219,237,237,0.14);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(253,158,47,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+
+.stat-value {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--light);
+}
+
+.stat-value .unit {
+  color: var(--orange);
+  font-size: 42px;
+}
+
+.stat-delta {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.stat-delta.up   { color: var(--lime); }
+.stat-delta.down { color: #e07070; }
+
+.stat-label {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+
+/* ── Numbered list items (.numbered-list) ─────────────────── */
+/*
+  More designed alternative to plain bullets.
+  Use for shipped items, key points, milestones.
+*/
+
+.numbered-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex !important;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.numbered-list li {
+  display: grid !important;
+  grid-template-columns: 40px 1fr;
+  gap: 0 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-strong);
+  position: static;
+  /* Reset padding from .reveal li */
+  padding-left: 0;
+}
+
+.numbered-list li:last-child { border-bottom: none; }
+
+.numbered-list li::before { display: none !important; }
+
+.numbered-list .item-num {
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--orange);
+  opacity: 0.7;
+  padding-top: 3px;
+}
+
+.numbered-list .item-body { flex: 1; }
+
+.numbered-list .item-title {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--light);
+  line-height: 1.2;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.numbered-list .item-detail {
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+
+/* ── Slide type: Compare (.slide-compare) ─────────────────── */
+/*
+  Two-card before/after layout.
+  Before: dark muted card. After: orange-tinted card with delta badge.
+  Use .compare-before / .compare-after inside .compare-grid.
+*/
+
+.reveal .slides section.slide-compare {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+
+.compare-before,
+.compare-after {
+  display: flex;
+  flex-direction: column;
+  padding: 36px 40px 32px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.compare-before {
+  background: rgba(219,237,237,0.03);
+  border: 1px solid rgba(219,237,237,0.12);
+}
+
+.compare-after {
+  background: rgba(253,158,47,0.07);
+  border: 1px solid rgba(253,158,47,0.22);
+}
+
+.compare-label {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.compare-value {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.compare-before .compare-value {
+  color: var(--light);
+  opacity: 0.28;
+}
+
+.compare-after .compare-value {
+  color: var(--orange);
+  opacity: 1;
+}
+
+.compare-value .unit {
+  font-size: 56px;
+}
+
+.compare-desc {
+  font-family: var(--body);
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* Improvement badge — top-right of the after card */
+.compare-delta-badge {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--lime);
+  background: rgba(207,255,176,0.1);
+  border: 1px solid rgba(207,255,176,0.22);
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+[data-theme="light"] .compare-before {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.12);
+}
+
+[data-theme="light"] .compare-before .compare-value {
+  color: var(--light);
+}
+
+[data-theme="light"] .compare-delta-badge {
+  color: #2e7d32;
+  background: rgba(46,125,50,0.08);
+  border-color: rgba(46,125,50,0.25);
+}
+
+
+/* ── Slide type: Graphic (.slide-graphic) ─────────────────── */
+/*
+  Inline SVG charts and diagrams. No external chart libraries.
+*/
+
+.reveal .slides section.slide-graphic {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.graphic-area {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.graphic-area svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ── SVG graphic utility classes ──────────────────────────── */
+/*
+  Used inside inline SVG charts and diagrams the skill generates.
+  Apply these class names to SVG elements, or inline equivalent styles.
+*/
+
+.chart-axis          { stroke: var(--chart-axis); stroke-width: 1; }
+.chart-bar           { fill: var(--orange); opacity: 0.85; }
+.chart-bar-secondary { fill: var(--chart-secondary); }
+.chart-line          { stroke: var(--orange); stroke-width: 2.5; fill: none; }
+.chart-line-secondary { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.chart-dot           { fill: var(--orange); }
+.chart-area          { fill: var(--orange); opacity: 0.08; }
+.chart-label         { font-family: var(--body); font-size: 13px; fill: var(--chart-label); }
+.chart-value         { font-family: var(--display); font-size: 14px; fill: var(--chart-value); }
+/* Pattern D — vertical column chart */
+.chart-grid          { stroke: var(--chart-grid); stroke-width: 1; stroke-dasharray: 4 4; }
+.chart-y-label       { font-family: var(--body); font-size: 11px; fill: var(--chart-y-label); text-anchor: end; }
+.chart-col-label     { font-family: var(--body); font-size: 13px; fill: var(--chart-label); text-anchor: middle; }
+.chart-col-value     { font-family: var(--display); font-size: 13px; fill: var(--chart-value); text-anchor: middle; }
+/* Pattern E — donut / ring chart */
+.chart-ring-track    { fill: none; stroke: var(--chart-ring-track); stroke-width: 30; }
+.chart-ring-fill     { fill: none; stroke: var(--orange); stroke-width: 30; stroke-linecap: round; }
+.chart-ring-value    { font-family: var(--display); font-size: 50px; fill: var(--chart-value); text-anchor: middle; }
+.chart-ring-sublabel { font-family: var(--body); font-size: 13px; fill: var(--chart-label); text-anchor: middle; }
+.chart-legend-label  { font-family: var(--body); font-size: 13px; fill: var(--chart-legend-label); }
+.chart-legend-value  { font-family: var(--display); font-size: 13px; fill: var(--chart-value); text-anchor: end; }
+.chart-legend-rule   { stroke: var(--chart-legend-rule); stroke-width: 1; }
+
+.diagram-box           { stroke: var(--chart-box-border); stroke-width: 1; fill: var(--chart-box); }
+.diagram-box-highlight { stroke: var(--orange); stroke-width: 1.5; fill: rgba(253, 158, 47, 0.06); }
+.diagram-arrow         { stroke: var(--chart-arrow); stroke-width: 1.5; fill: none; }
+.diagram-label         { font-family: var(--body); font-size: 14px; fill: var(--chart-box-title); }
+.diagram-sublabel      { font-family: var(--body); font-size: 12px; fill: var(--chart-box-sub); }
+
+
+/* ── Slide type: Split (.slide-split) ─────────────────────── */
+/*
+  Two-column layout. Good for before/after, two workstreams, text + graphic.
+*/
+
+.reveal .slides section.slide-split {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+/* Give the split heading more room before the columns */
+.reveal .slides section.slide-split .slide-heading {
+  margin-bottom: 40px;
+}
+
+.split-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 48px;
+  align-items: start;
+}
+
+.split-divider {
+  background: var(--rule-strong);
+  align-self: stretch;
+}
+
+.split-left,
+.split-right {
+  padding-top: 8px;
+}
+
+.split-left  .eyebrow,
+.split-right .eyebrow {
+  margin-bottom: 14px;
+}
+
+
+/* ── Slide type: Highlights (.slide-highlights) ──────────────
+   Grid of feature/highlight cards. Use for "what shipped" lists
+   or any 3–6 items where individual cards land better than bullets.
+   Default grid is 3 columns — override grid-template-columns
+   inline for 2-col (4 items as 2×2) or 2-col (2 items).
+*/
+
+.reveal .slides section.slide-highlights {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.highlights-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-content: start;
+  margin-top: 24px;
+}
+
+.highlight-card {
+  padding: 24px 28px;
+  border: 1px solid rgba(219,237,237,0.12);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 200ms;
+}
+
+.highlight-card:hover {
+  border-color: rgba(253,158,47,0.3);
+}
+
+.highlight-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.highlight-desc {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+}
+
+[data-theme="light"] .highlight-card {
+  border-color: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.02);
+}
+[data-theme="light"] .highlight-card:hover { border-color: rgba(253,158,47,0.4); }
+[data-theme="light"] .highlight-title { color: var(--orange); }
+
+
+/* ── Slide type: Steps (.slide-steps) ────────────────────────
+   Numbered sequential steps. Use for process, how-it-works,
+   rollout order — any content where sequence matters.
+   Each step has an orange step number, a bold title, and
+   an optional one-line description.
+*/
+
+.reveal .slides section.slide-steps {
+  display: flex;
+  flex-direction: column;
+  padding: 88px 72px 36px;
+}
+
+.steps-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(219,237,237,0.08);
+}
+
+.step:last-child { border-bottom: none; }
+
+.step-num {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--orange);
+  opacity: 0.55;
+  flex-shrink: 0;
+  width: 44px;
+  padding-top: 3px;
+}
+
+.step-body { flex: 1; }
+
+.step-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--light);
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+}
+
+[data-theme="light"] .step { border-bottom-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .step-title { color: var(--dark); }
+
+
+/* ── Slide type: Half text + visual (.slide-half) ────────────
+   50/50 layout: left side is heading + bullets or prose; right
+   side holds a chart SVG, architecture diagram, or screenshot.
+   Use when a graphic supports the text argument rather than
+   standing alone as a full graphic slide.
+   Note: the cascade override below sets flex-direction: row.
+*/
+
+.reveal .slides section.slide-half {
+  display: flex;
+  flex-direction: row;
+  padding: 88px 72px 36px;
+  gap: 56px;
+  align-items: flex-start;
+}
+
+.half-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.half-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  align-self: stretch;
+}
+
+.half-right img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.half-right svg {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+}
+
+
+/* ── Slide type: Image (.slide-image) ─────────────────────── */
+/*
+  Full-bleed or contained image / visual slide.
+  Use data-background-image on <section> for full bleed.
+*/
+
+.reveal .slides section.slide-image {
+  padding: 0;
+  position: relative;
+}
+
+.image-caption {
+  position: absolute;
+  bottom: 32px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 10;
+}
+
+.image-caption p {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(219, 237, 237, 0.7);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Contained image within slide */
+.slide-image .slide-image-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 68px 72px 36px;
+}
+
+.slide-image .slide-image-inner img {
+  max-width: 100%;
+  max-height: 460px;
+  border-radius: 8px;
+  border: 1px solid rgba(219, 237, 237, 0.1);
+  object-fit: contain;
+}
+
+
+/* ── Light mode ───────────────────────────────────────────── */
+/*
+  --orange stays #FD9E2F always (keeps the top gradient consistent).
+  Elements needing contrast on a light bg use --orange-contrast.
+*/
+
+[data-theme="light"] {
+  --dark:            #E8E8E5;
+  --light:           #111111;
+  --surface:         #F0F0ED;
+  --muted:           rgba(17, 17, 17, 0.48);
+  --rule:            rgba(17, 17, 17, 0.1);
+  --rule-strong:     rgba(17, 17, 17, 0.18);
+  /* Unified orange and lime for light mode — one value across all usages */
+  --orange:          #C47A1A;
+  --lime:            #2A6E30;
+  /* SVG chart colour tokens — light mode overrides */
+  --chart-label:        rgba(17, 17, 17, 0.5);
+  --chart-value:        #111111;
+  --chart-axis:         rgba(17, 17, 17, 0.12);
+  --chart-grid:         rgba(17, 17, 17, 0.06);
+  --chart-secondary:    rgba(17, 17, 17, 0.15);
+  --chart-y-label:      rgba(17, 17, 17, 0.4);
+  --chart-box:          rgba(0, 0, 0, 0.02);
+  --chart-box-border:   rgba(17, 17, 17, 0.14);
+  --chart-arrow:        rgba(17, 17, 17, 0.22);
+  --chart-box-title:    #111111;
+  --chart-box-sub:      rgba(17, 17, 17, 0.45);
+  --chart-ring-track:   rgba(17, 17, 17, 0.1);
+  --chart-legend-label: rgba(17, 17, 17, 0.55);
+  --chart-legend-rule:  rgba(17, 17, 17, 0.1);
+}
+
+[data-theme="light"] .reveal-viewport {
+  background: var(--dark);
+}
+
+[data-theme="light"] .stat-delta.up {
+  color: #2e7d32;
+}
+
+[data-theme="light"] .stat-delta.down {
+  color: #c62828;
+}
+
+[data-theme="light"] .deck-chrome {
+  background: rgba(232, 232, 229, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Top gradient stays orange — do not change --orange in light mode */
+[data-theme="light"] .top-rule {
+  background: linear-gradient(90deg, #FD9E2F 0%, #FFBE70 40%, #FD9E2F 70%, #D4710A 100%);
+}
+
+[data-theme="light"] .audience-badge.community {
+  border-color: rgba(196, 122, 26, 0.4);
+  color: rgba(196, 122, 26, 0.9);
+  background: rgba(196, 122, 26, 0.08);
+}
+
+[data-theme="light"] .audience-badge.investor {
+  border-color: rgba(46, 125, 50, 0.4);
+  color: rgba(46, 125, 50, 0.9);
+  background: rgba(46, 125, 50, 0.06);
+}
+
+/* ── Data table (.slide-table) ─────────────────────────────── */
+/*
+  Structured rows: tickets, todos, users, metrics.
+  Pair with .pill status labels: .open .closed .in-progress .review
+*/
+
+.slide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: var(--light);
+}
+
+.slide-table thead tr {
+  border-bottom: 1px solid rgba(219,237,237,0.2);
+}
+
+.slide-table thead th {
+  font-family: var(--display);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 400;
+  text-align: left;
+  padding: 0 20px 10px 0;
+}
+
+.slide-table tbody tr {
+  border-bottom: 1px solid rgba(219,237,237,0.07);
+}
+
+.slide-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.slide-table tbody td {
+  padding: 11px 20px 11px 0;
+  vertical-align: middle;
+}
+
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  font-family: var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-weight: 500;
+  background: rgba(219,237,237,0.08);
+  color: var(--muted);
+  border: 1px solid rgba(219,237,237,0.15);
+}
+
+.pill.open {
+  background: rgba(91,192,141,0.12);
+  color: var(--lime);
+  border-color: rgba(91,192,141,0.25);
+}
+
+.pill.closed {
+  background: rgba(219,237,237,0.06);
+  color: var(--muted);
+  border-color: rgba(219,237,237,0.1);
+}
+
+.pill.in-progress {
+  background: rgba(253,158,47,0.12);
+  color: var(--orange);
+  border-color: rgba(253,158,47,0.25);
+}
+
+.pill.review {
+  background: rgba(130,140,255,0.12);
+  color: #a0a8ff;
+  border-color: rgba(130,140,255,0.25);
+}
+
+
+[data-theme="light"] .stat-card {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="light"] .stat-label {
+  border-top-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Title warm glow is too strong on light bg — suppress it */
+[data-theme="light"] .reveal .slides section.slide-title {
+  background: transparent;
+}
+
+/* Chart CSS classes now inherit values via --chart-* tokens in [data-theme="light"].
+   No per-class overrides needed — the token cascade handles it. */
+
+/* Utility */
+[data-theme="light"] .reveal .eyebrow.is-issue { color: #c0392b; }
+[data-theme="light"] .reveal .sev.crit { background: rgba(192,57,43,0.1); color: #c0392b; border-color: rgba(192,57,43,0.3); }
+[data-theme="light"] .reveal .dot.green { background: var(--lime); }
+
+[data-theme="light"] p.slide-desc { color: rgba(17, 17, 17, 0.5); }
+
+[data-theme="light"] .reveal .slide-number { color: var(--muted); }
+
+
+/* ── Slide image attachments ──────────────────────────────── */
+/*
+  Slides with data-image get a .slide-img-btn injected by JS.
+  The gallery overlay lists all attached images across the deck.
+*/
+
+.slide-img-btn {
+  position: absolute;
+  bottom: 18px;
+  right: 68px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(17,17,17,0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(219,237,237,0.18);
+  border-radius: 4px;
+  color: rgba(219,237,237,0.55);
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 10px;
+  height: 24px;
+  cursor: pointer;
+  transition: border-color 160ms, color 160ms;
+  z-index: 12;
+}
+
+.slide-img-btn:hover {
+  border-color: rgba(253,158,47,0.5);
+  color: var(--orange);
+}
+
+.slide-img-btn svg { display: block; flex-shrink: 0; }
+
+/* Gallery overlay */
+.gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: rgba(11,11,11,0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.gallery-overlay.open { display: flex; }
+
+.gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 1px solid rgba(219,237,237,0.08);
+  flex-shrink: 0;
+}
+
+.gallery-title {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(219,237,237,0.4);
+}
+
+.gallery-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(219,237,237,0.16);
+  border-radius: 3px;
+  color: rgba(219,237,237,0.5);
+  cursor: pointer;
+  height: 26px;
+  width: 26px;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  transition: border-color 160ms, color 160ms;
+}
+
+.gallery-close:hover {
+  border-color: rgba(253,158,47,0.45);
+  color: var(--orange);
+}
+
+.gallery-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px 40px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(219,237,237,0.1);
+  background: rgba(255,255,255,0.02);
+  transition: border-color 200ms;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-item:hover { border-color: rgba(253,158,47,0.35); }
+
+.gallery-item img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item-meta {
+  padding: 12px 14px;
+  flex-shrink: 0;
+}
+
+.gallery-item-slide {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(219,237,237,0.35);
+  margin-bottom: 4px;
+}
+
+.gallery-item-caption {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(219,237,237,0.65);
+  line-height: 1.4;
+}
+
+[data-theme="light"] .gallery-overlay {
+  background: rgba(240,240,237,0.96);
+}
+
+[data-theme="light"] .gallery-header {
+  border-bottom-color: rgba(0,0,0,0.1);
+}
+
+[data-theme="light"] .gallery-title,
+[data-theme="light"] .gallery-item-slide {
+  color: rgba(17,17,17,0.4);
+}
+
+[data-theme="light"] .gallery-item-caption {
+  color: rgba(17,17,17,0.7);
+}
+
+[data-theme="light"] .gallery-item {
+  border-color: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.02);
+}
+
+[data-theme="light"] .gallery-close {
+  border-color: rgba(0,0,0,0.2);
+  color: rgba(17,17,17,0.75);
+}
+
+[data-theme="light"] .gallery-close:hover {
+  border-color: rgba(253,158,47,0.6);
+  color: var(--orange);
+}
+
+[data-theme="light"] .slide-img-btn {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.5);
+}
+
+
+/* ── Slide type: Closing (.slide-closing) ─────────────────── */
+/*
+  Centered outro — not a mirror of the title slide.
+  Just the sign-off text, centered on both axes.
+  No meta block, no grid, no right-hand content.
+*/
+
+.reveal .slides section.slide-closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 72px;
+  background: radial-gradient(ellipse 600px 400px at 50% 50%, rgba(253,158,47,0.06) 0%, transparent 100%);
+}
+
+.slide-closing .closing-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+}
+
+.slide-closing .closing-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.slide-closing .closing-heading {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--light);
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.slide-closing .closing-body {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+/* ── Print / PDF export ───────────────────────────────────── */
+/*
+  Activate with ?print-pdf in the URL.
+  Reveal.js restructures the DOM into .pdf-page containers and handles
+  pagination itself — do not add page-break or height overrides on sections
+  here or they will fight reveal.css and cut slides in half.
+
+  @page sets the canvas to exactly the slide dimensions so Chrome doesn't
+  letterbox or crop. Must be 16:9 to match the 1280×720 deck.
+*/
+
+@page {
+  size: 1280px 720px;
+  margin: 0;
+}
+
+@media print {
+  .deck-chrome { display: none !important; }
+  .top-rule    { display: none !important; }
+
+  .reveal .progress,
+  .reveal .controls,
+  .reveal .slide-number {
+    display: none !important;
+  }
+}
+
+
+/* ── Reveal.js cascade overrides ──────────────────────────────
+   reveal.css sets display/padding/height on sections using
+   html:not(.print-pdf) .reveal .slides section with specificity
+   (0,3,2) and !important. The rules below match that specificity.
+   Since auki-theme.css is inlined AFTER reveal.css in generated
+   decks (and linked after in the preview), source order gives us
+   the win when specificity is equal.
+──────────────────────────────────────────────────────────────── */
+
+html:not(.print-pdf) .reveal .slides section {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 88px 72px 36px !important;
+  height: 720px !important;
+  width: 1280px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+html:not(.print-pdf) .reveal .slides section.slide-title {
+  display: block !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+
+html:not(.print-pdf) .reveal .slides section.slide-section {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 80px !important;
+  overflow: hidden !important;
+}
+
+html:not(.print-pdf) .reveal .slides section.slide-statement {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 68px 72px !important;
+}
+
+html:not(.print-pdf) .reveal .slides section.slide-closing {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 72px !important;
+}
+
+html:not(.print-pdf) .reveal .slides section.slide-half {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 56px !important;
+}
+
+
+/* ── Print-PDF: restore flex layouts ──────────────────────────
+   reveal.css sets display:block!important on all sections in
+   print-pdf mode to manage its pagination machinery. That wipes
+   out our flex layouts so content stacks top-left instead of
+   filling the slide correctly. These rules mirror the non-print
+   cascade overrides above but target html.print-pdf so they
+   apply only during the ?print-pdf export flow.
+────────────────────────────────────────────────────────────── */
+
+html.print-pdf .reveal .slides section {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 88px 72px 36px !important;
+  box-sizing: border-box !important;
+}
+
+html.print-pdf .reveal .slides section.slide-title {
+  display: block !important;
+  padding: 0 !important;
+}
+
+html.print-pdf .reveal .slides section.slide-section {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 80px !important;
+  overflow: hidden !important;
+}
+
+html.print-pdf .reveal .slides section.slide-statement {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 68px 72px !important;
+}
+
+html.print-pdf .reveal .slides section.slide-closing {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 72px !important;
+}
+
+html.print-pdf .reveal .slides section.slide-half {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 56px !important;
+}
+
+/* Hide fixed chrome in print-pdf layout phase so it doesn't
+   push pagination and create a blank first page */
+html.print-pdf .top-rule,
+html.print-pdf .deck-chrome,
+html.print-pdf .gallery-overlay { display: none !important; }
+
+
+/* ── PDF image appendix ───────────────────────────────────────
+   One appendix page per slide with data-image attached.
+   Injected as .pdf-page > section.slide-image-appendix by JS.
+────────────────────────────────────────────────────────────── */
+
+html.print-pdf .slide-image-appendix {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 28px !important;
+  padding: 56px 72px !important;
+  box-sizing: border-box !important;
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.appendix-eyebrow {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  align-self: flex-start;
+}
+
+.appendix-img {
+  flex: 1;
+  min-height: 0;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(219,237,237,0.1);
+}
+
+.appendix-caption {
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+  text-align: center;
+  max-width: 900px;
+}

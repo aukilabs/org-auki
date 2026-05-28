@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shuning — Cactus · Week 20</title>
+<script>
+  /* Set theme before paint to avoid flash */
+  (function() {
+    var t = localStorage.getItem('auki-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="stylesheet" href="roundup-style.css">
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <img class="mark logo-dark"  src="../../../../design/core/assets/auki-monogram-white.svg" alt="">
+    <img class="mark logo-light" src="../../../../design/core/assets/auki-monogram-black.svg" alt="">
+    <img class="wm logo-dark"    src="../../../../design/core/assets/auki-wordmark-white.svg"  alt="Auki Labs">
+    <img class="wm logo-light"   src="../../../../design/core/assets/auki-wordmark-black.svg"  alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <span class="audience-badge">Community</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <div class="eyebrow">Building the real-world web.</div>
+      <h1 class="doc-title">Cactus<br><span class="accent">Week 20.</span></h1>
+      <p class="doc-subtitle">Shelf compliance detection shipped to production. Navigation accuracy improvements rolling out to pilot locations.</p>
+    </div>
+
+    <div class="opening-right">
+      <span class="meta-author">Shuning</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; Week 20</span>
+      <div class="meta-projects">
+        <span class="project-tag">Cactus</span>
+        <span class="project-tag">Spatial AI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+      <p>We shipped shelf compliance detection to production this week — the model now identifies out-of-stock and misplaced items with 94% accuracy, up from 81% in our previous release. Navigation route generation also got significantly faster, which improves the in-store staff experience across our pilot locations.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">94<span class="unit">%</span></div>
+          <div class="metric-delta up">↑ from 81%</div>
+          <div class="metric-label">Shelf compliance accuracy</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">2.1<span class="unit">s</span></div>
+          <div class="metric-delta up">↓ from 4.8s</div>
+          <div class="metric-label">Navigation route time</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Shelf compliance detection</strong> — production release of the updated model. Staff can now view compliance status per shelf section in real time through the Cactus app. Accuracy is up 13 percentage points from the previous version.</li>
+        <li><strong>Navigation route optimisation</strong> — rewrote the route generation algorithm to account for real-time congestion signals. Average route time dropped from 4.8 seconds to 2.1 seconds. Staff reach their destinations faster, with fewer unnecessary detours.</li>
+        <li><strong>App performance improvements</strong> — reduced cold start time by 40% and cut memory usage on older devices by approximately 30%. Cactus now runs well on devices from 2019 onwards.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+      <h3>Multi-floor navigation</h3>
+      <p>Extending navigation to handle multi-floor retail environments. The challenge is transitions — stairs, escalators, and lifts each require different routing logic. Single-floor navigation is mature; multi-floor adds a new class of spatial problem. Currently in testing at one of our pilot locations.</p>
+
+      <h3>AI shelf recommendations</h3>
+      <p>Building an AI layer that recommends shelf reorganisation based on compliance history and foot traffic patterns. The goal is to shift from reactive compliance checking to proactive layout optimisation. Early results from internal testing are promising.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+      <ul>
+        <li>Complete multi-floor navigation testing and roll out to all pilot locations.</li>
+        <li>Ship first version of AI shelf recommendations to a small group of pilot users for feedback.</li>
+        <li>Improve shelf compliance model for high-glare environments — current accuracy drops in direct sunlight conditions.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-notice">This document is approved for public community release.</span>
+  <span class="center">Auki Labs</span>
+  <span class="footer-date">12 May 2026 &nbsp;·&nbsp; Week 20</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+  (function() {
+    var html  = document.documentElement;
+    var btn   = document.getElementById('theme-toggle');
+    var sun   = btn.querySelector('.icon-sun');
+    var moon  = btn.querySelector('.icon-moon');
+    var dark  = document.querySelectorAll('.logo-dark');
+    var light = document.querySelectorAll('.logo-light');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('auki-theme', theme);
+      var isLight = theme === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none'  : 'block';
+      dark.forEach(function(el)  { el.style.display = isLight ? 'none'  : 'block'; });
+      light.forEach(function(el) { el.style.display = isLight ? 'block' : 'none';  });
+    }
+
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+</body>
+</html>

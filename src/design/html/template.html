@@ -1,0 +1,382 @@
+<!doctype html>
+<!--
+  AUKI LABS — ROUNDUP TEMPLATE
+  ════════════════════════════════════════════════════════════════════════
+
+  This file is a COMPONENT REFERENCE, not a fill-in-the-blanks form.
+  The skill reads this to understand what building blocks are available,
+  then assembles only the ones the content actually calls for.
+
+  STRUCTURE (always required):
+    page shell → opening block → body sections → footer
+
+  COMPONENTS (skill picks as needed):
+    Within sections, choose from: prose p, ul list, h3 workstreams,
+    metrics strip, callout. Mix freely. Nothing is mandatory.
+
+  AUDIENCE VARIANTS:
+    internal   → all sections including blockers
+    community  → omit blockers, apply redaction, community footer text
+    investor   → omit blockers, apply redaction, investor tone + footer text
+
+  CSS: link to roundup-style.css (or equivalent path from output location)
+  ════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- FILL: "{AUTHOR} — {PROJECT} · {PERIOD}" -->
+<title>Author — Project · Period</title>
+
+<!-- Theme applied before paint — no flash -->
+<script>
+  (function() {
+    var t = localStorage.getItem('auki-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!--
+  CSS: the skill reads design/html/roundup-style.css in full and inlines it here.
+  Do not link to an external stylesheet — every generated file must be self-contained.
+  roundup-style.css already has TT Firs Neue fonts base64-embedded, so no external
+  font files are needed. Google Fonts (DM Sans, Space Grotesk) loads from the CDN
+  and requires an internet connection to render correctly.
+-->
+<style>
+  /* INLINE: full contents of design/html/roundup-style.css go here */
+</style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════
+     PAGE SHELL — always include
+═══════════════════════════════════ -->
+
+<div class="top-rule"></div>
+
+<header class="page-header">
+  <div class="logo">
+    <!-- Dark variants shown by default; JS swaps to light on theme toggle -->
+    <!--
+      LOGOS: the skill reads each SVG file and inlines it as a base64 data URI.
+      src="data:image/svg+xml;base64,{base64-encoded SVG content}"
+      Files: design/core/assets/auki-monogram-white.svg  (dark mode mark)
+             design/core/assets/auki-monogram-black.svg  (light mode mark)
+             design/core/assets/auki-wordmark-white.svg  (dark mode wordmark)
+             design/core/assets/auki-wordmark-black.svg  (light mode wordmark)
+    -->
+    <img class="mark logo-dark"  src="data:image/svg+xml;base64,MONOGRAM_WHITE_B64" alt="">
+    <img class="mark logo-light" src="data:image/svg+xml;base64,MONOGRAM_BLACK_B64" alt="">
+    <img class="wm logo-dark"    src="data:image/svg+xml;base64,WORDMARK_WHITE_B64"  alt="Auki Labs">
+    <img class="wm logo-light"   src="data:image/svg+xml;base64,WORDMARK_BLACK_B64"  alt="Auki Labs">
+  </div>
+  <div class="header-right">
+    <!--
+      AUDIENCE BADGE
+      internal  → class="audience-badge"   text="Internal"
+      community → class="audience-badge community"  text="Community"
+      investor  → class="audience-badge investor"   text="Investor"
+    -->
+    <span class="audience-badge">Internal</span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-sun"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════
+     OPENING BLOCK — always include
+     Full-bleed border, content column-aligned
+═══════════════════════════════════ -->
+
+<div class="opening">
+  <div class="opening-inner">
+    <div class="opening-left">
+      <!-- Eyebrow: company tagline, always the same -->
+      <div class="eyebrow">Building the real-world web.</div>
+
+      <!--
+        TITLE: project or team name + period as accent
+        Keep it short. The accent span is optional — use it when the
+        period completes the title naturally. e.g.:
+          Spatial SDK<br><span class="accent">Week 20.</span>
+          Cactus<br><span class="accent">Q2 Sprint 3.</span>
+          Company<br><span class="accent">May 2026.</span>
+      -->
+      <h1 class="doc-title">Project Name</h1>
+
+      <!--
+        SUBTITLE: one sentence framing the update.
+        The most useful thing to put here is what changed or what the week was about.
+        Optional — omit if nothing meaningful to say beyond the title.
+      -->
+      <p class="doc-subtitle">One sentence framing what this week was about.</p>
+    </div>
+
+    <div class="opening-right">
+      <!-- Author name, date · week, project tags -->
+      <span class="meta-author">Author Name</span>
+      <span class="meta-date">12 May 2026 &nbsp;·&nbsp; <span class="meta-week">Week 20</span></span>
+      <div class="meta-projects">
+        <span class="project-tag">Project A</span>
+        <!-- <span class="project-tag">Project B</span> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     BODY SECTIONS
+     Each section is a 2-column grid:
+       left  → number + section name (sticky)
+       right → content (skill assembles from components)
+═══════════════════════════════════ -->
+
+<div class="body-wrap">
+
+
+  <!-- ─────────────────────────────────
+       SECTION 01 — TL;DR
+       ALWAYS: one prose paragraph.
+       The single most important thing. What changed, why it matters.
+       No lists, no sub-heads, no metrics. Just the paragraph.
+  ───────────────────────────────── -->
+  <section class="section" id="s-tldr">
+    <div class="section-left">
+      <span class="section-num">01</span>
+      <span class="section-name">TL;DR</span>
+    </div>
+    <div class="section-right">
+
+      <!-- COMPONENT: Prose paragraph — the only content type in TL;DR -->
+      <p>The TL;DR paragraph goes here. One paragraph only. State what happened and why it matters. Write this last — it should summarise the whole document.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────
+       SECTION 02 — WHAT SHIPPED
+       Content is flexible. Use whatever combination fits.
+       Common patterns:
+         metrics + list
+         list only (no metrics if nothing meaningful to quantify)
+         h3 workstreams + descriptions (for distinct deliverable streams)
+         callout for a standout achievement or unblock
+  ───────────────────────────────── -->
+  <section class="section" id="s-shipped">
+    <div class="section-left">
+      <span class="section-num">02</span>
+      <span class="section-name">What shipped</span>
+    </div>
+    <div class="section-right">
+
+      <!--
+        COMPONENT: Metrics strip
+        USE: When there are 2–5 real, meaningful numbers.
+             The numbers should be immediately legible — avoid jargon in labels.
+        SKIP: If no metrics exist, if the numbers need too much explanation,
+              or if there are fewer than 2 worth showing.
+        PLACEMENT: Top of "What shipped". Occasionally fits in TL;DR
+                   for a single landmark number.
+      -->
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">180<span class="unit">ms</span></div>
+          <div class="metric-delta up">↓ from 420ms</div>
+          <div class="metric-label">Domain join latency</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">94<span class="unit">%</span></div>
+          <div class="metric-delta up">↑ from 71%</div>
+          <div class="metric-label">Pose accuracy</div>
+        </div>
+        <!--
+          metric-delta classes:
+            up   → green  (improvement)
+            down → red    (regression — use rarely, be honest)
+            (none) → muted (neutral context like "vs. last week")
+        -->
+      </div>
+
+      <!--
+        COMPONENT: Bullet list
+        USE: Discrete, parallel shipped items. Each item is one thing.
+             Bold the item name, dash, then the detail.
+        SKIP: If items are better told as prose or grouped under h3s.
+      -->
+      <ul>
+        <li><strong>Thing that shipped</strong> — what it is and why it matters. Specific. Declarative.</li>
+        <li><strong>Another thing</strong> — same pattern. Avoid vague language like "made progress on" — if it shipped, say what it is.</li>
+      </ul>
+
+      <!--
+        COMPONENT: Callout
+        USE: The single most important thing in the section that deserves
+             visual emphasis — an unblock, a milestone, a consequence.
+        SKIP: If nothing particularly stands out. Don't force one.
+        MAX: 1 per section. 2 per document absolute maximum.
+        PLACEMENT: After the list, never before.
+      -->
+      <div class="callout">
+        <p>The most important thing about this section. A consequence, an unblock, or a headline insight that the reader should not miss.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────
+       SECTION 03 — WHAT'S IN PROGRESS
+       Content is flexible.
+       Common patterns:
+         h3 workstream name + prose (most common — use when 2+ named streams)
+         list only (use for simpler "here's what I'm working on" weeks)
+         prose only (use for one focused piece of work)
+  ───────────────────────────────── -->
+  <section class="section" id="s-progress">
+    <div class="section-left">
+      <span class="section-num">03</span>
+      <span class="section-name">What's in progress</span>
+    </div>
+    <div class="section-right">
+
+      <!--
+        COMPONENT: h3 workstream heading
+        USE: When there are 2+ distinct named streams of work.
+             Each h3 names the stream; prose or a short list follows.
+        SKIP: If work is a single thread or items are better as a flat list.
+      -->
+      <h3>Workstream name</h3>
+      <p>What's happening in this workstream. Current state, what's blocking or enabling it, expected completion. Be specific about where it is — "~60% done", "design complete, implementation starting", etc.</p>
+
+      <h3>Another workstream</h3>
+      <p>Same pattern. Keep each workstream focused — if the paragraph is getting long, the workstream probably needs splitting or is better served by a list.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────
+       SECTION 04 — BLOCKERS / ASKS
+       INTERNAL ONLY — omit entirely for community and investor.
+       Content: usually a list. Each item names what's needed and from whom.
+       A callout is appropriate if there's a critical blocker.
+  ───────────────────────────────── -->
+  <section class="section" id="s-blockers">
+    <div class="section-left">
+      <span class="section-num">04</span>
+      <span class="section-name">Blockers &amp; asks</span>
+    </div>
+    <div class="section-right">
+
+      <ul>
+        <li><strong>What you need</strong> — from whom, why, and by when. Make the ask specific and actionable.</li>
+      </ul>
+
+      <!-- Callout appropriate here for a critical blocker with timeline impact -->
+
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────
+       SECTION 05 — WHAT'S NEXT
+       (Section 04 for community/investor — renumber when blockers omitted)
+       Content: usually a list. Near-term plans and intentions.
+       Prose is fine if the direction is more nuanced than a list captures.
+  ───────────────────────────────── -->
+  <section class="section" id="s-next">
+    <div class="section-left">
+      <!--
+        NUMBER: 05 for internal (blockers included)
+                04 for community/investor (blockers omitted)
+      -->
+      <span class="section-num">05</span>
+      <span class="section-name">What's next</span>
+    </div>
+    <div class="section-right">
+
+      <ul>
+        <li>Next thing — specific and near-term. If it's on the horizon but not imminent, put it last or leave it out.</li>
+        <li>Another next thing</li>
+      </ul>
+
+    </div>
+  </section>
+
+
+</div><!-- /.body-wrap -->
+
+
+<!-- ═══════════════════════════════════
+     FOOTER — always include
+═══════════════════════════════════ -->
+
+<footer class="page-footer">
+  <!--
+    FOOTER NOTICE — varies by audience:
+    internal  → "This document is for internal use only."
+    community → "This document is approved for public community release."
+    investor  → "This document is prepared for investor distribution."
+  -->
+  <span class="footer-notice">This document is for internal use only.</span>
+  <span class="center">Auki Labs</span>
+  <!-- FILL: full date e.g. "12 May 2026" -->
+  <span class="footer-date">12 May 2026</span>
+</footer>
+
+<div class="bottom-rule"></div>
+
+
+<!-- ═══════════════════════════════════
+     PRINT-PDF JS — always include verbatim
+═══════════════════════════════════ -->
+<script>
+  (function() {
+    if (!/[?&]print-pdf/.test(window.location.search)) return;
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 300);
+    });
+  })();
+</script>
+
+
+<!-- ═══════════════════════════════════
+     THEME JS — always include verbatim
+═══════════════════════════════════ -->
+<script>
+  (function() {
+    var html  = document.documentElement;
+    var btn   = document.getElementById('theme-toggle');
+    var sun   = btn.querySelector('.icon-sun');
+    var moon  = btn.querySelector('.icon-moon');
+    var dark  = document.querySelectorAll('.logo-dark');
+    var light = document.querySelectorAll('.logo-light');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('auki-theme', theme);
+      var isLight = theme === 'light';
+      sun.style.display  = isLight ? 'block' : 'none';
+      moon.style.display = isLight ? 'none'  : 'block';
+      dark.forEach(function(el)  { el.style.display = isLight ? 'none'  : 'block'; });
+      light.forEach(function(el) { el.style.display = isLight ? 'block' : 'none';  });
+    }
+
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function() {
+      applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+</body>
+</html>
